@@ -1,5 +1,5 @@
 /**
- * If the public key starts with pk_prod, return the production URL, otherwise return the sandbox URL
+ * return the sandbox or production URL
  * @param {string} publicKey - Your public key.
  * @returns The base url for the public key
  */

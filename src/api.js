@@ -32,9 +32,9 @@ async function Zainpay(param) {
         sandbox = false
     }
 
-    const url1 = getUrl(sandbox);
+    const baseUrl = getUrl(sandbox);
     const axiosStruct = await axios.create({
-        baseURL: url1,
+        baseURL: baseUrl,
         headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + publicKey,
@@ -43,7 +43,6 @@ async function Zainpay(param) {
 
     const { url, method } = serviceTypes[serviceType.name];
 
-    // to add path param to the call
     if (data.param) {
         url = url + data.param;
     }
