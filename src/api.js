@@ -15,7 +15,7 @@ async function Zainpay(param) {
     let { publicKey, serviceType, sandbox, data } = param;
     
       /**
-   * makes an encrypted call to Spendo API
+   * makes an encrypted call to Zainpay API
    * @param {object} params => publicKey, data, serviceType sandbox
    * @param {function} callback gets called with the result(data) object
    * @return {object} data return decrypted data response object
