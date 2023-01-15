@@ -215,4 +215,64 @@ The following services are available with this SDK
     console.log(reponse);
     ```
 
+### 8. Update Virtual Account Status
+- This request enables a merchant to update the status of a virtual account. To update the status of a virtual account POST the json payload below.
+    
+   ```js
+    const reponse = await Zainpay({
+        publicKey: PUBLIC_KEY,
+        serviceType: serviceTypes.UPDATE_VIRTUAL_ACCOUNT_STATUS,
+        sandbox: true,
+        data: {
+          "zainboxCode": "THbfnDvK5o", 
+          "accountNumber": "7963799062", 
+          "status": true 
+        }
+    });
+    console.log(reponse);
+    ```
+
+### 9. All Virtual Account Balance of a Zainbox
+- This request enables a merchant to get the balance of all virtual accounts of a zainbox. To get the balance of all virtual accounts of a zainbox GET the json payload below.
+    
+   ```js
+    const reponse = await Zainpay({
+        publicKey: PUBLIC_KEY,
+        serviceType: serviceTypes.ALL_VIRTUAL_ACCOUNT_BALANCE,
+        sandbox: true,
+        params: "{zainbox-codeName}"
+    });
+    console.log(reponse);
+    ```
+
+## 10. Get Bank List
+- This request enables a merchant to get the list of banks supported by Zainpay. To get the list of banks supported by Zainpay GET the json payload below.
+    
+   ```js
+    const reponse = await Zainpay({
+        publicKey: PUBLIC_KEY,
+        serviceType: serviceTypes.BANK_LIST,
+        sandbox: true,
+    });
+    console.log(reponse);
+    ```
+
+<!-- Name Enquiry
+ -->
+## 11. Name Enquiry
+- This request enables a merchant to get the name of a bank account holder. To get the name of a bank account holder GET the json payload below.
+    
+   ```js
+    const reponse = await Zainpay({
+        publicKey: PUBLIC_KEY,
+        serviceType: serviceTypes.NAME_ENQUIRY,
+        sandbox: true,
+        params: "?bankCode={bankCode}&accountNumber={accountNumber}"
+
+    });
+    console.log(reponse);
+    ```
+    
+
+
 
