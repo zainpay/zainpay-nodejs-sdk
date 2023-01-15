@@ -256,9 +256,6 @@ The following services are available with this SDK
     });
     console.log(reponse);
     ```
-
-<!-- Name Enquiry
- -->
 ## 11. Name Enquiry
 - This request enables a merchant to get the name of a bank account holder. To get the name of a bank account holder GET the json payload below.
     
