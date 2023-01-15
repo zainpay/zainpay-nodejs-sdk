@@ -101,16 +101,15 @@ The following services are available with this SDK
 
 
 ### 1. Get ZainBoxes
-This request enables a merchant to get all his created zainboxes url. To get all zainboxes GET the json payload below.
-    
+This request enables a merchant to get all his created zainboxes url.
+
    ```js
     const reponse = await Zainpay({
         publicKey: PUBLIC_KEY,
-        serviceType: serviceTypes.ZAINBOXES,
+        serviceType: serviceTypes.ZAINBOXES
     });
     console.log(reponse);
     ```
-
 
 ### 2. Create Virtual Account
 Every virtual account most be tied to a zainbox. See the doc for creating an instance of a zainbox. To create a virtual account POST the json payload below.
@@ -143,10 +142,82 @@ This request enables a merchant to get all his created virtual accounts. To get 
     const reponse = await Zainpay({
         publicKey: PUBLIC_KEY,
         serviceType: serviceTypes.VIRTUAL_ACCOUNTS,
+        sandbox: true,
         params: "{zainbox-codeName}"
     });
     console.log(reponse);
     ```
 
+// virtual account balance
+
+### 4. Get Virtual Account Balance
+This request enables a merchant to get the balance of a virtual account. To get the balance of a virtual account GET the json payload below.
+    
+   ```js
+    const reponse = await Zainpay({
+        publicKey: PUBLIC_KEY,
+        serviceType: serviceTypes.VIRTUAL_ACCOUNT_BALANCE,
+        params: "{virtual-account-number}"
+        sandbox: true,
+    });
+    console.log(reponse);
+    ```
+### 5. Get Zainbox Transactions
+This request enables a merchant to get all transactions made to a zainbox. To get all transactions made to a zainbox GET the json payload below.
+    
+   ```js
+    const reponse = await Zainpay({
+        publicKey: PUBLIC_KEY,
+        serviceType: serviceTypes.ZAINBOX_TRANSACTIONS,
+        sandbox: true,
+        params: "{zainbox-codeName}"
+    });
+    console.log(reponse);
+    ```
+
+### 5. Get Merchant Transactions
+This request enables a merchant to get all transactions made to a zainbox. To get all transactions made to a zainbox GET the json payload below.
+    
+   ```js
+    const reponse = await Zainpay({
+        publicKey: PUBLIC_KEY,
+        serviceType: serviceTypes.MERCHANT_TRANSACTIONS,
+        sandbox: true,
+    });
+    console.log(reponse);
+    ```
+    
+### 6. Get Zainbox Profile
+This request enables a merchant to get the profile of a zainbox. To get the profile of a zainbox GET the json payload below.
+    
+   ```js
+    const reponse = await Zainpay({
+        publicKey: PUBLIC_KEY,
+        serviceType: serviceTypes.ZAINBOX_PROFILE,
+        sandbox: true,
+        params: "{zainbox-codeName}"
+    });
+    console.log(reponse);
+    ```
+
+### 7. Create Zainbox
+This request enables a merchant to create a zainbox. To create a zainbox POST the json payload below.
+    
+   ```js
+    const reponse = await Zainpay({
+        publicKey: PUBLIC_KEY,
+        serviceType: serviceTypes.CREATE_ZAINBOX,
+        sandbox: true,
+        data: {
+          "name":"tesSSt.Onliness",
+          "tags": "test",
+          "callbackUrl": "https://www-test-a3ef.restdb.io/wlistener",
+          "email": "info@test.onlines"
+        }
+    });
+    console.log(reponse);
+    ```
+
+    // ZAINBOXES
 
 
