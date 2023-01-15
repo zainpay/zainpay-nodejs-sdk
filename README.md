@@ -93,13 +93,6 @@ Instantiate the Zainpay class
 
 The following services are available with this SDK
 
-**1**. [**Virtual-Accounts**](#1-virtual-accounts)
-- [Get ZainBoxes](#get-zainboxes)
-
-**2**. [**Card Endpoints**](#1-virtual-accounts)
-
-
-
 ### 1. Get ZainBoxes
 - This request enables a merchant to get all his created zainboxes url.
 
