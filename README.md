@@ -125,7 +125,7 @@ The following services are available with this SDK
     "address": "aminu babandi", 
     "title": "Mr", 
     "state": "Kano", 
-    "zainboxCode": "THbfnDvK5o9"
+    "zainboxCode": "{zainbox-codeName}9"
   }});
   console.log(reponse);
   ```
@@ -219,7 +219,7 @@ The following services are available with this SDK
         serviceType: serviceTypes.UPDATE_VIRTUAL_ACCOUNT_STATUS,
         sandbox: true,
         data: {
-          "zainboxCode": "THbfnDvK5o", 
+          "zainboxCode": "{zainbox-codeName}", 
           "accountNumber": "7963799062", 
           "status": true 
         }
@@ -279,7 +279,7 @@ The following services are available with this SDK
           "amount": "9997",
           "sourceAccountNumber": "7966884043",
           "sourceBankCode": "0013",
-          "zainboxCode": "THbfnDvK5o",
+          "zainboxCode": "{zainbox-codeName}",
           "txnRef": "2Zei390tghmnj",
           "narration": "Your school fees"
         }                
@@ -338,7 +338,7 @@ The following services are available with this SDK
         sandbox: true,
         data: {
             "name": "new-daily-settlement3",
-            "zainboxCode": "THbfnDvK5o",
+            "zainboxCode": "{zainbox-codeName}",
             "scheduleType": "T1",
             "schedulePeriod": "Daily",
             "settlementAccountList": [
