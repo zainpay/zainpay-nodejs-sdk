@@ -55,7 +55,7 @@ Instantiate the Zainpay class
       "address": "Gidado street Kano",
       "title": "Mr",
       "state": "Kano",
-      "zainboxCode": "_FDkbg2DOykjQWRpNxv9d"
+      "zainboxCode": "{zainbox-codeName}"
   }
   });
   console.log(reponse);
@@ -81,7 +81,7 @@ Instantiate the Zainpay class
           "address": "Gidado street Kano",
           "title": "Mr",
           "state": "Kano",
-          "zainboxCode": "_FDkbg2DOykjQWRpNxv9d"
+          "zainboxCode": "{zainbox-codeName}"
       }
     });
     console.log(reponse);
