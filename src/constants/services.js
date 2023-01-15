@@ -63,6 +63,31 @@ module.exports = {
         name: "FUNDS_TRANSFER",
         url: '/bank/transfer',
         method: 'post',
+    },
+    TRANSFER_VERIFICATION: {
+        name: "TRANSFER_VERIFICATION",
+        url: '/virtual-account/wallet/transaction/verify',
+        method: 'get',
+    },
+    DEPOSIT_VERIFICATION: {
+        name: "DEPOSIT_VERIFICATION",
+        url: '/virtual-account/wallet/deposit/verify',
+        method: 'get',
+    },
+    TOTAL_PAYMENT_COLLECTED: {
+        name: "TOTAL_PAYMENT_COLLECTED",
+        url: '/zainbox/transfer/deposit/summary',
+        method: 'get',
+    },
+    CREATE_SCHEDULED_SETTLEMENT: {
+        name: "CREATE_SCHEDULED_SETTLEMENT",
+        url: '/zainbox/settlement',
+        method: 'post',
+    },
+    GET_SCHEDULED_SETTLEMENT: {
+        name: "GET_SCHEDULED_SETTLEMENT",
+        url: '/zainbox/settlement',
+        method: 'get',
     }
 
 

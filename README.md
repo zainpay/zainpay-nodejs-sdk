@@ -288,7 +288,87 @@ The following services are available with this SDK
     console.log(reponse);
     ```
 
+## 13. Transfer Verification
+- This request enables a merchant to verify the status of a transfer. To verify the status of a transfer GET the json payload below.
     
+   ```js
+    const reponse = await Zainpay({
+        publicKey: PUBLIC_KEY,
+        serviceType : serviceTypes.TRANSFER_VERIFICATION,
+        sandbox: true,
+        params: "{txnRef}"
+    });
+    console.log(reponse);
+    ```
 
 
+## 14. Deposit Verification
+- This request enables a merchant to verify the status of a deposit. To verify the status of a deposit GET the json payload below.
+    
+   ```js
+    const reponse = await Zainpay({
+        publicKey: PUBLIC_KEY,
+        serviceType : serviceTypes.DEPOSIT_VERIFICATION,
+        sandbox: true,
+        params: "{txnRef}"
+    });
+    console.log(reponse);
+    ```    
+
+## 15. Total Payment Collected By Zainbox
+- This request enables a merchant to get the total payment collected by a zainbox. To get the total payment collected by a zainbox GET the json payload below.
+    
+   ```js
+    const reponse = await Zainpay({
+        publicKey: PUBLIC_KEY,
+        serviceType : serviceTypes.TOTAL_PAYMENT_COLLECTED,
+        sandbox: true,
+        params: "{zainbox-codeName}?dateFrom=2022-02&dateTo=2022-03"
+    });
+    console.log(reponse);
+    ```
+  
+## 16. Create Scheduled Settlement
+- This request enables a merchant to create a scheduled settlement for a zainbox. To create a scheduled settlement for a zainbox POST the json payload below.
+    
+   ```js
+    const reponse = await Zainpay({
+        publicKey: PUBLIC_KEY,
+        serviceType : serviceTypes.CREATE_SCHEDULED_SETTLEMENT,
+        sandbox: true,
+        data: {
+            "name": "new-daily-settlement3",
+            "zainboxCode": "THbfnDvK5o",
+            "scheduleType": "T1",
+            "schedulePeriod": "Daily",
+            "settlementAccountList": [
+                {
+                    "accountNumber": "1234567890",
+                    "bankCode": "0009",
+                    "percentage": "10"
+                },
+                {
+                    "accountNumber": "1234567890",
+                    "bankCode": "0009",
+                    "percentage": "90"
+                }
+            ],
+            "status": true
+      }
+    });
+    console.log(reponse);
+    ```
+
+## 17. Get Settlement
+- This request enables a merchant to get a scheduled settlement for a zainbox. To get a scheduled settlement for a zainbox GET the json payload below.
+    
+   ```js
+    const reponse = await Zainpay({
+        publicKey: PUBLIC_KEY,
+        serviceType : serviceTypes.GET_SCHEDULED_SETTLEMENT,
+        sandbox: true,
+        params: "?zainboxCode={zainbox-codeName}"
+    });
+    console.log(reponse);
+    ```
 
