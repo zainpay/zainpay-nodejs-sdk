@@ -69,19 +69,20 @@ Instantiate the Zainpay class
     const reponse = await Zainpay({
         publicKey: PUBLIC_KEY,
         serviceType: serviceTypes.CREATE_VIRTUAL_ACCOUNT,
-    data: {
-      "bankType": "wemaBank",
-      "firstName": "Bello",
-      "surname": "Samuel Sunday",
-      "email": "bellosamuelsunday@gmail.com",
-      "mobileNumber": "0810000000",
-      "dob": "12-08-1980",
-      "gender": "M",
-      "address": "Gidado street Kano",
-      "title": "Mr",
-      "state": "Kano",
-      "zainboxCode": "_FDkbg2DOykjQWRpNxv9d"
-  }
+        sandbox: true,
+        data: {
+          "bankType": "wemaBank",
+          "firstName": "Bello",
+          "surname": "Samuel Sunday",
+          "email": "bellosamuelsunday@gmail.com",
+          "mobileNumber": "0810000000",
+          "dob": "12-08-1980",
+          "gender": "M",
+          "address": "Gidado street Kano",
+          "title": "Mr",
+          "state": "Kano",
+          "zainboxCode": "_FDkbg2DOykjQWRpNxv9d"
+      }
     });
     console.log(reponse);
     ```
@@ -99,7 +100,8 @@ The following services are available with this SDK
    ```js
     const reponse = await Zainpay({
         publicKey: PUBLIC_KEY,
-        serviceType: serviceTypes.ZAINBOXES
+        serviceType: serviceTypes.ZAINBOXES,
+        sandbox: true,
     });
     console.log(reponse);
     ```
