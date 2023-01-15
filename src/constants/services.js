@@ -58,6 +58,11 @@ module.exports = {
         name: "NAME_ENQUIRY",
         url: '/bank/name-enquiry',
         method: 'get',
+    },
+    FUNDS_TRANSFER: {
+        name: "FUNDS_TRANSFER",
+        url: '/bank/transfer',
+        method: 'post',
     }
 
 

@@ -264,6 +264,30 @@ The following services are available with this SDK
     });
     console.log(reponse);
     ```
+
+## 12. Funds Transfer
+- This request enables a merchant to transfer funds from a virtual account to a bank account. To transfer funds from a virtual account to a bank account POST the json payload below.
+    
+   ```js
+    const reponse = await Zainpay({
+        publicKey: PUBLIC_KEY,
+        serviceType: serviceTypes.FUNDS_TRANSFER,
+        sandbox: true,
+        data: {
+          "destinationAccountNumber": "0044159752",
+          "destinationBankCode": "000005",
+          "amount": "9997",
+          "sourceAccountNumber": "7966884043",
+          "sourceBankCode": "0013",
+          "zainboxCode": "THbfnDvK5o",
+          "txnRef": "2Zei390tghmnj",
+          "narration": "Your school fees"
+        }                
+          
+    });
+    console.log(reponse);
+    ```
+
     
 
 
