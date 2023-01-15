@@ -101,7 +101,7 @@ The following services are available with this SDK
 
 
 ### 1. Get ZainBoxes
-This request enables a merchant to get all his created zainboxes url.
+- This request enables a merchant to get all his created zainboxes url.
 
    ```js
     const reponse = await Zainpay({
@@ -112,7 +112,7 @@ This request enables a merchant to get all his created zainboxes url.
     ```
 
 ### 2. Create Virtual Account
-Every virtual account most be tied to a zainbox. See the doc for creating an instance of a zainbox. To create a virtual account POST the json payload below.
+- Every virtual account most be tied to a zainbox. See the doc for creating an instance of a zainbox.
 
 ```js
   const reponse = await Zainpay({
@@ -120,7 +120,7 @@ Every virtual account most be tied to a zainbox. See the doc for creating an ins
     serviceType: serviceTypes.CREATE_VIRTUAL_ACCOUNT,
     sandbox: true,
     data: {
-    "bankType": "wemaBank", 
+    "bankType": "wemaBank, 
     "firstName": "kabir",
     "surname": "idris", 
     "email": "binkabir@gmail.com", 
@@ -133,10 +133,9 @@ Every virtual account most be tied to a zainbox. See the doc for creating an ins
     "zainboxCode": "THbfnDvK5o9"
   }});
   console.log(reponse);
-```
-
+  ```
 ### 3. Get Virtual Accounts
-This request enables a merchant to get all his created virtual accounts. To get all virtual accounts GET the json payload below.
+- This request enables a merchant to get all his created virtual accounts. To get all virtual accounts GET the json payload below.
     
    ```js
     const reponse = await Zainpay({
@@ -148,10 +147,8 @@ This request enables a merchant to get all his created virtual accounts. To get 
     console.log(reponse);
     ```
 
-// virtual account balance
-
 ### 4. Get Virtual Account Balance
-This request enables a merchant to get the balance of a virtual account. To get the balance of a virtual account GET the json payload below.
+- This request enables a merchant to get the balance of a virtual account. To get the balance of a virtual account GET the json payload below.
     
    ```js
     const reponse = await Zainpay({
@@ -163,7 +160,7 @@ This request enables a merchant to get the balance of a virtual account. To get 
     console.log(reponse);
     ```
 ### 5. Get Zainbox Transactions
-This request enables a merchant to get all transactions made to a zainbox. To get all transactions made to a zainbox GET the json payload below.
+- This request enables a merchant to get all transactions made to a zainbox. To get all transactions made to a zainbox GET the json payload below.
     
    ```js
     const reponse = await Zainpay({
@@ -176,7 +173,7 @@ This request enables a merchant to get all transactions made to a zainbox. To ge
     ```
 
 ### 5. Get Merchant Transactions
-This request enables a merchant to get all transactions made to a zainbox. To get all transactions made to a zainbox GET the json payload below.
+- This request enables a merchant to get all transactions made to a zainbox. To get all transactions made to a zainbox GET the json payload below.
     
    ```js
     const reponse = await Zainpay({
@@ -186,9 +183,9 @@ This request enables a merchant to get all transactions made to a zainbox. To ge
     });
     console.log(reponse);
     ```
-    
+
 ### 6. Get Zainbox Profile
-This request enables a merchant to get the profile of a zainbox. To get the profile of a zainbox GET the json payload below.
+- This request enables a merchant to get the profile of a zainbox. To get the profile of a zainbox GET the json payload below.
     
    ```js
     const reponse = await Zainpay({
@@ -201,7 +198,7 @@ This request enables a merchant to get the profile of a zainbox. To get the prof
     ```
 
 ### 7. Create Zainbox
-This request enables a merchant to create a zainbox. To create a zainbox POST the json payload below.
+- This request enables a merchant to create a zainbox. To create a zainbox POST the json payload below.
     
    ```js
     const reponse = await Zainpay({
@@ -217,7 +214,5 @@ This request enables a merchant to create a zainbox. To create a zainbox POST th
     });
     console.log(reponse);
     ```
-
-    // ZAINBOXES
 
 
