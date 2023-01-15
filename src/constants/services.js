@@ -89,7 +89,4 @@ module.exports = {
         url: '/zainbox/settlement',
         method: 'get',
     }
-
-
-
 }

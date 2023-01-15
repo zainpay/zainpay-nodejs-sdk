@@ -21,7 +21,7 @@ This SDK can be installed with `npm` or `yarn`.
 
 Using `npm`,
 
-```
+```bash
 npm install zainpay-nodejs-sdk
 ```
 
@@ -115,17 +115,17 @@ The following services are available with this SDK
     serviceType: serviceTypes.CREATE_VIRTUAL_ACCOUNT,
     sandbox: true,
     data: {
-    "bankType": "wemaBank, 
-    "firstName": "kabir",
-    "surname": "idris", 
-    "email": "binkabir@gmail.com", 
-    "mobileNumber": "08068869000", 
-    "dob": "12-08-1999", 
-    "gender": "M", 
-    "address": "aminu babandi", 
-    "title": "Mr", 
-    "state": "Kano", 
-    "zainboxCode": "{zainbox-codeName}9"
+        "bankType": "wemaBank, 
+        "firstName": "kabir",
+        "surname": "idris", 
+        "email": "binkabir@gmail.com", 
+        "mobileNumber": "08068869000", 
+        "dob": "12-08-1999", 
+        "gender": "M", 
+        "address": "aminu babandi", 
+        "title": "Mr", 
+        "state": "Kano", 
+        "zainboxCode": "{zainbox-codeName}"
   }});
   console.log(reponse);
   ```

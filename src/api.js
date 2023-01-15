@@ -50,12 +50,10 @@ async function Zainpay(param) {
     const response = axiosStruct[method](url, data)
         .then(function (response) {
             if (response.status === 200) {
-                // console.log('response', response.data);
                 return response.data
             }
         })
         .catch(function (error) {
-            console.log('error', error);
             return error.response.data
     });
           
