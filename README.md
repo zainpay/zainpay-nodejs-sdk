@@ -100,9 +100,8 @@ The following services are available with this SDK
 
 
 
-<!-- add the Virtual Accounts -->
 ### 1. Get ZainBoxes
-Get all your created zainboxes
+This request enables a merchant to get all his created zainboxes url. To get all zainboxes GET the json payload below.
     
    ```js
     const reponse = await Zainpay({
@@ -111,5 +110,43 @@ Get all your created zainboxes
     });
     console.log(reponse);
     ```
+
+
+### 2. Create Virtual Account
+Every virtual account most be tied to a zainbox. See the doc for creating an instance of a zainbox. To create a virtual account POST the json payload below.
+
+```js
+  const reponse = await Zainpay({
+    publicKey: PUBLIC_KEY,
+    serviceType: serviceTypes.CREATE_VIRTUAL_ACCOUNT,
+    sandbox: true,
+    data: {
+    "bankType": "wemaBank", 
+    "firstName": "kabir",
+    "surname": "idris", 
+    "email": "binkabir@gmail.com", 
+    "mobileNumber": "08068869000", 
+    "dob": "12-08-1999", 
+    "gender": "M", 
+    "address": "aminu babandi", 
+    "title": "Mr", 
+    "state": "Kano", 
+    "zainboxCode": "THbfnDvK5o9"
+  }});
+  console.log(reponse);
+```
+
+### 3. Get Virtual Accounts
+This request enables a merchant to get all his created virtual accounts. To get all virtual accounts GET the json payload below.
+    
+   ```js
+    const reponse = await Zainpay({
+        publicKey: PUBLIC_KEY,
+        serviceType: serviceTypes.VIRTUAL_ACCOUNTS,
+        params: "{zainbox-codeName}"
+    });
+    console.log(reponse);
+    ```
+
 
 

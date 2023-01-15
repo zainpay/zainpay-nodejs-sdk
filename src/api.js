@@ -12,7 +12,7 @@ async function Zainpay(param) {
         handleErrors,
         handleAxiosError,
     } = require('./utils');
-    let { publicKey, serviceType, sandbox, data } = param;
+    let { publicKey, serviceType, sandbox, data, params } = param;
     
       /**
    * makes an encrypted call to Zainpay API
@@ -41,16 +41,16 @@ async function Zainpay(param) {
         },
     });
 
-    const { url, method } = serviceTypes[serviceType.name];
+    let { url, method } = serviceTypes[serviceType.name];
 
-    if (data.param) {
-        url = url + data.param;
+    if (params) {
+        url = url + "/" + params;
     }
 
     const response = axiosStruct[method](url, data)
         .then(function (response) {
             if (response.status === 200) {
-                console.log('response', response.data);
+                // console.log('response', response.data);
                 return response.data
             }
         })

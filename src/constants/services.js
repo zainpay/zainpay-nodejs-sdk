@@ -11,8 +11,13 @@ module.exports = {
     },
     CREATE_VIRTUAL_ACCOUNT: {
         name: "CREATE_VIRTUAL_ACCOUNT",
-        url: '/zainbox/virtual-account/create/request',
-        method: 'options',
+        url: '/virtual-account/create/request',
+        method: 'post',
+    },
+    VIRTUAL_ACCOUNTS: {
+        name: "VIRTUAL_ACCOUNTS",
+        url: 'zainbox/virtual-accounts',
+        method: 'get',
     },
     ZAINBOX_PROFILE: {
         name: "ZAINBOX_PROFILE",
