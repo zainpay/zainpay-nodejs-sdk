@@ -294,7 +294,7 @@ The following services are available with this SDK
    ```js
     const reponse = await Zainpay({
         publicKey: PUBLIC_KEY,
-        serviceType : serviceTypes.TRANSFER_VERIFICATION,
+        serviceType: serviceTypes.TRANSFER_VERIFICATION,
         sandbox: true,
         params: "{txnRef}"
     });
@@ -308,7 +308,7 @@ The following services are available with this SDK
    ```js
     const reponse = await Zainpay({
         publicKey: PUBLIC_KEY,
-        serviceType : serviceTypes.DEPOSIT_VERIFICATION,
+        serviceType: serviceTypes.DEPOSIT_VERIFICATION,
         sandbox: true,
         params: "{txnRef}"
     });
@@ -321,7 +321,7 @@ The following services are available with this SDK
    ```js
     const reponse = await Zainpay({
         publicKey: PUBLIC_KEY,
-        serviceType : serviceTypes.TOTAL_PAYMENT_COLLECTED,
+        serviceType: serviceTypes.TOTAL_PAYMENT_COLLECTED,
         sandbox: true,
         params: "{zainbox-codeName}?dateFrom=2022-02&dateTo=2022-03"
     });
@@ -334,7 +334,7 @@ The following services are available with this SDK
    ```js
     const reponse = await Zainpay({
         publicKey: PUBLIC_KEY,
-        serviceType : serviceTypes.CREATE_SCHEDULED_SETTLEMENT,
+        serviceType: serviceTypes.CREATE_SCHEDULED_SETTLEMENT,
         sandbox: true,
         data: {
             "name": "new-daily-settlement3",
@@ -365,9 +365,79 @@ The following services are available with this SDK
    ```js
     const reponse = await Zainpay({
         publicKey: PUBLIC_KEY,
-        serviceType : serviceTypes.GET_SCHEDULED_SETTLEMENT,
+        serviceType: serviceTypes.GET_SCHEDULED_SETTLEMENT,
         sandbox: true,
         params: "?zainboxCode={zainbox-codeName}"
+    });
+    console.log(reponse);
+    ```
+
+
+## 18. Validate OTP for Card Transaction
+- This request enables a merchant to validate the OTP for a card transaction. To validate the OTP for a card transaction POST the json payload below.
+    
+   ```js
+    const reponse = await Zainpay({
+        publicKey: PUBLIC_KEY,
+        serviceType: serviceTypes.VALIDATE_OTP,
+        sandbox: true,
+        data: {
+            "otp":"{otp}",
+            "sessionId":"{sessionId}"
+        }
+    });
+    console.log(reponse);
+    ```
+
+
+## 19. Validate Card
+- This request enables a merchant to validate a card. To validate a card POST the json payload below.
+    
+   ```js
+    const reponse = await Zainpay({
+        publicKey: PUBLIC_KEY,
+        serviceType: serviceTypes.VALIDATE_CARD,
+        sandbox: true,
+        data: {
+            "sessionId":"{sessionId}",
+            "cardEncryptedData":"{cardEncryptedData}"
+        }
+    });
+    console.log(reponse);
+    ```
+
+
+<!-- initialize payment -->
+## 20. Initialize Payment
+- This request enables a merchant to initialize a card payment. To initialize a payment POST the json payload below.
+    
+   ```js
+    const reponse = await Zainpay({
+        publicKey: PUBLIC_KEY,
+        serviceType: serviceTypes.INITIALIZE_PAYMENT,
+        sandbox: true,
+        data: {
+            "amount": "100", 
+            "txnRef" : "{txnRef}", 
+            "mobileNumber": "08068869098", 
+            "zainboxCode": "{zainbox-codeName}", 
+            "emailAddress": "{email}",
+            "successCallBackUrl" : "http://loclhost:8080/success",
+            "failureCallBackUrl" : "http://loclhost:8080/failure"
+        }
+    });
+    console.log(reponse);
+    ```
+
+## 21. Retrieve Payment Info
+- This request enables a merchant to retrieve card payment info. To retrieve payment info GET the json payload below.
+    
+   ```js
+    const reponse = await Zainpay({
+        publicKey: PUBLIC_KEY,
+        serviceType: serviceTypes.RETRIEVE_PAYMENT_INFO,
+        sandbox: true,
+        params: "?e={sessionId}"
     });
     console.log(reponse);
     ```

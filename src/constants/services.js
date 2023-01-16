@@ -88,5 +88,25 @@ module.exports = {
         name: "GET_SCHEDULED_SETTLEMENT",
         url: '/zainbox/settlement',
         method: 'get',
+    },
+    VALIDATE_OTP: {
+        name: "VALIDATE_OTP",
+        url: '/zainbox/card/other-card/validate/otp',
+        method: 'post',
+    },
+    VALIDATE_CARD: {
+        name: "VALIDATE_CARD",
+        url: '/zainbox/card/validate/card',
+        method: 'post',
+    },
+    INITIALIZE_PAYMENT: {
+        name: "INITIALIZE_PAYMENT",
+        url: '/zainbox/card/initialize/payment',
+        method: 'post',
+    },
+    RETRIEVE_PAYMENT_INFO: {
+        name: "RETRIEVE_PAYMENT_INFO",
+        url: '/zainbox/card/retrieve/payment/info',
+        method: 'get',
     }
 }
