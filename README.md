@@ -12,8 +12,8 @@ NodeJS wrapper for making request to Zainpay API
 
 ## Getting Started
 
-- To get started with this SDK, create an [account](https://zainpay.ng/) on Zainpay if you haven't already.
-- You can then retrieve your API keys from your [dashboard](https://zainpay.ng/).
+- To get started with this SDK, create an [account](https://zainpay.ng/login) on Zainpay if you haven't already.
+- You can then retrieve your API keys from your [dashboard](https://zainpay.ng/merchant/dashboard/settings).
 
 ## Installation
 
@@ -42,7 +42,7 @@ Instantiate the Zainpay class
 ```js
   const reponse = await Zainpay({
     publicKey: PUBLIC_KEY,
-    serviceType: serviceTypes.SERVICE_TYPE,
+    serviceType: serviceTypes.SERVICE_TYPE_NAME,
     sandbox: true,
     data: {
       "bankType": "wemaBank",
@@ -61,41 +61,84 @@ Instantiate the Zainpay class
   console.log(reponse);
 ```
 
-**Note:**
 
-- The sandbox field is optional, if you don't specify it, it will default to false, and you will be using the [production(live)](https://zainpay.ng/) API. For example:
-    
-    ```js
-    const reponse = await Zainpay({
-        publicKey: PUBLIC_KEY,
-        serviceType: serviceTypes.CREATE_VIRTUAL_ACCOUNT,
-        sandbox: true,
-        data: {
-          "bankType": "wemaBank",
-          "firstName": "Bello",
-          "surname": "Samuel Sunday",
-          "email": "bellosamuelsunday@gmail.com",
-          "mobileNumber": "0810000000",
-          "dob": "12-08-1980",
-          "gender": "M",
-          "address": "Gidado street Kano",
-          "title": "Mr",
-          "state": "Kano",
-          "zainboxCode": "{zainbox-codeName}"
-      }
-    });
-    console.log(reponse);
-    ```
+
+**Note:**
+The Zainpay class takes in the following parameters:
+
+- **publicKey** - This is your public key, which can be found on your [dashboard](https://zainpay.ng/merchant/dashboard/settings).
+- **serviceType** - This is the service you want to use, for example, `CREATE_VIRTUAL_ACCOUNT`.
+- **sandbox** - This is a boolean value, if set to true, it will use the [sandbox](https://sandbox.zainpay.ng/) API, if set to false, it will use the [production(live)](https://api.zainpay.ng/) API.
+- **data** - This is the data you want to send to the API, for example, the payload for creating a virtual account.
+- **params** - This is the data you want to send to the API, for example, the payload for getting a virtual account.
 
 
 - For more information about the services exposed by the SDK, please refer to the [documentation](https://zainpay.ng/developers/).
+
+### Service Type Name List
+- `CREATE_ZAINBOX`
+- `ZAINBOXES`
+- `ZAINBOX_TRANSACTIONS`
+- `MERCHANT_TRANSACTIONS`
+- `CREATE_VIRTUAL_ACCOUNT`
+- `VIRTUAL_ACCOUNTS`
+- `UPDATE_VIRTUAL_ACCOUNT_STATUS`
+- `VIRTUAL_ACCOUNT_BALANCE`
+- `ALL_VIRTUAL_ACCOUNT_BALANCE`
+- `ZAINBOX_PROFILE`
+- `BANK_LIST`
+- `NAME_ENQUIRY`
+- `FUNDS_TRANSFER`
+- `TRANSFER_VERIFICATION`
+- `DEPOSIT_VERIFICATION`
+- `TOTAL_PAYMENT_COLLECTED`
+- `CREATE_SCHEDULED_SETTLEMENT`
+- `GET_SCHEDULED_SETTLEMENT`
+- `INITIALIZE_PAYMENT`
+- `RETRIEVE_PAYMENT_INFO`
+
 
 ## Available Services exposed by the SDK
 
 The following services are available with this SDK
 
-### 1. Get ZainBoxes
-- This request enables a merchant to get all his created zainboxes url.
+### 1. Create Zainbox
+- A zainbox is a virtual bucket that allows a merchant to create unlimited multiple virtual accounts.
+- This request enables a merchant to create a zainbox.
+    
+   ```js
+    const reponse = await Zainpay({
+        publicKey: PUBLIC_KEY,
+        serviceType: serviceTypes.CREATE_ZAINBOX,
+        sandbox: true,
+        data: {
+          "name":"tesSSt.Onliness",
+          "tags": "test",
+          "codeNamePrefix": "333",
+          "callbackUrl": "https://www-test-a3ef.restdb.io/wlistener",
+          "email": "info@test.onlines"
+        }
+    });
+    console.log(reponse);
+    ```
+
+    
+    ***Response***
+    ```json
+    {
+        "status": "Success",
+        "description": "successful",
+        "data": {
+            "codeName": "zB2lg6lJtcGzP5XqouN9",
+            "name": "wecode-contribution"
+        }
+    } 
+    ```     
+
+
+
+### 2. Get All ZainBoxes
+- This request enables a merchant to get all your created zainboxes.
 
    ```js
     const reponse = await Zainpay({
@@ -106,32 +149,66 @@ The following services are available with this SDK
     console.log(reponse);
     ```
 
-### 2. Create Virtual Account
-- Every virtual account most be tied to a zainbox. See the doc for creating an instance of a zainbox.
+    ***Response***
+    ```json
+    {
+        "code": "00",
+        "data": [
+            {
+                "callbackUrl": "http://10e1-41-184-106-54.ngrok.io/notification",
+                "codeName": "THbfnDvK5o",
+                "name": "test-box",
+                "tags": "land, management"
+            },
+            {
+                "callbackUrl": "https://powershop.ng/notification",
+                "codeName": "rAqwjnYO5chL3QuV7yk0",
+                "name": "powershop8",
+                "tags": "discos, kedco, aedc"
+            }
+        ],
+        "description": "successful",
+        "status": "Success"
+    }
+    ```
 
-```js
-  const reponse = await Zainpay({
-    publicKey: PUBLIC_KEY,
-    serviceType: serviceTypes.CREATE_VIRTUAL_ACCOUNT,
-    sandbox: true,
-    data: {
-        "bankType": "wemaBank, 
-        "firstName": "kabir",
-        "surname": "idris", 
-        "email": "binkabir@gmail.com", 
-        "mobileNumber": "08068869000", 
-        "dob": "12-08-1999", 
-        "gender": "M", 
-        "address": "aminu babandi", 
-        "title": "Mr", 
-        "state": "Kano", 
-        "zainboxCode": "{zainbox-codeName}"
-  }});
-  console.log(reponse);
-  ```
-### 3. Get Virtual Accounts
-- This request enables a merchant to get all his created virtual accounts. To get all virtual accounts GET the json payload below.
-    
+### 3. Create Virtual Account
+- Create a virtual account. Map a virtual account to a zainbox. A zainbox can hold multiple virtual accounts.
+
+    ```js
+    const reponse = await Zainpay({
+        publicKey: PUBLIC_KEY,
+        serviceType: serviceTypes.CREATE_VIRTUAL_ACCOUNT,
+        sandbox: true,
+        data: {
+            "bankType": "wemaBank, 
+            "firstName": "kabir",
+            "surname": "idris", 
+            "email": "binkabir@gmail.com", 
+            "mobileNumber": "08068869000", 
+            "dob": "12-08-1999", 
+            "gender": "M", 
+            "address": "aminu babandi", 
+            "title": "Mr", 
+            "state": "Kano", 
+            "zainboxCode": "{zainbox-codeName}"
+        }
+    });
+    console.log(reponse);
+    ```
+    ***Response***
+    ```json
+    {
+        "accountName": "Samuel Sunday Bello",
+        "accountNumber": "4426334208", 
+        "bankName": "wemaBank",
+        "email": "bellosamuelsunday@gmail.com"
+    }
+    ```
+### 4. Get Virtual Accounts
+- This request enables you to get all virtual accounts linked to a zainbox.
+
+    **Parameter:** zainboxCode(required).
    ```js
     const reponse = await Zainpay({
         publicKey: PUBLIC_KEY,
@@ -142,8 +219,26 @@ The following services are available with this SDK
     console.log(reponse);
     ```
 
-### 4. Get Virtual Account Balance
-- This request enables a merchant to get the balance of a virtual account. To get the balance of a virtual account GET the json payload below.
+    ***Response***
+    ```json
+    [
+        {
+            "bankAccount": "7966903286",
+            "bankName": "035",
+            "name": "Go fundme Limited"
+        },
+        {
+            "bankAccount": "7969472891",
+            "bankName": "035",
+            "name": "Idris Urmi Bello"
+        }
+    ]
+    ```
+
+### 5. Get Virtual Account Balance
+- This request enables you to the current wallet balance of a virtual account number
+
+    **Parameter:** virtualAccoutNumber(required)
     
    ```js
     const reponse = await Zainpay({
@@ -154,66 +249,32 @@ The following services are available with this SDK
     });
     console.log(reponse);
     ```
-### 5. Get Zainbox Transactions
-- This request enables a merchant to get all transactions made to a zainbox. To get all transactions made to a zainbox GET the json payload below.
-    
-   ```js
-    const reponse = await Zainpay({
-        publicKey: PUBLIC_KEY,
-        serviceType: serviceTypes.ZAINBOX_TRANSACTIONS,
-        sandbox: true,
-        params: "{zainbox-codeName}"
-    });
-    console.log(reponse);
-    ```
 
-### 5. Get Merchant Transactions
-- This request enables a merchant to get all transactions made to a zainbox. To get all transactions made to a zainbox GET the json payload below.
-    
-   ```js
-    const reponse = await Zainpay({
-        publicKey: PUBLIC_KEY,
-        serviceType: serviceTypes.MERCHANT_TRANSACTIONS,
-        sandbox: true,
-    });
-    console.log(reponse);
+    ***Response***
+    ```json
+    {
+        "code": "00",
+        "data":
+        {
+            "accountName": "Aminu Nasar Adam", 
+            "accountNumber": "7966884043", 
+            "balanceAmount": 372555, 
+            "transactionDate": "2021-10-13T13:45:52" 
+        }, 
+        "description": "successful",
+        "status": "Success" 
+    }
     ```
-
-### 6. Get Zainbox Profile
-- This request enables a merchant to get the profile of a zainbox. To get the profile of a zainbox GET the json payload below.
     
-   ```js
-    const reponse = await Zainpay({
-        publicKey: PUBLIC_KEY,
-        serviceType: serviceTypes.ZAINBOX_PROFILE,
-        sandbox: true,
-        params: "{zainbox-codeName}"
-    });
-    console.log(reponse);
-    ```
+### 6. Update Virtual Account Status
 
-### 7. Create Zainbox
-- This request enables a merchant to create a zainbox. To create a zainbox POST the json payload below.
-    
-   ```js
-    const reponse = await Zainpay({
-        publicKey: PUBLIC_KEY,
-        serviceType: serviceTypes.CREATE_ZAINBOX,
-        sandbox: true,
-        data: {
-          "name":"tesSSt.Onliness",
-          "tags": "test",
-          "callbackUrl": "https://www-test-a3ef.restdb.io/wlistener",
-          "email": "info@test.onlines"
-        }
-    });
-    console.log(reponse);
-    ```
+- This request enables you to Activate or deactivate virtual account.
+- NOTE: Setting the status field to true will activate the virtual account, while setting it to false will deactivate it.
 
-### 8. Update Virtual Account Status
-- This request enables a merchant to update the status of a virtual account. To update the status of a virtual account POST the json payload below.
-    
-   ```js
+    ***Important Note***
+    A deactivated virtual account will not be able to receive or transfer funds
+
+    ```js
     const reponse = await Zainpay({
         publicKey: PUBLIC_KEY,
         serviceType: serviceTypes.UPDATE_VIRTUAL_ACCOUNT_STATUS,
@@ -226,10 +287,21 @@ The following services are available with this SDK
     });
     console.log(reponse);
     ```
+ 
+***Response***
+```json
+        {
+            "code": "00",
+            "description": "Successfully Updated Account",
+            "status": "success"
+        }
+```
 
-### 9. All Virtual Account Balance of a Zainbox
-- This request enables a merchant to get the balance of all virtual accounts of a zainbox. To get the balance of all virtual accounts of a zainbox GET the json payload below.
+
+### 7. All Virtual Account Balance of a Zainbox
+- This request enables a merchant to fetches all current account balances for all virtual accounts in a zainbox.
     
+    **Parameter:** zainboxCode(required)
    ```js
     const reponse = await Zainpay({
         publicKey: PUBLIC_KEY,
@@ -239,9 +311,86 @@ The following services are available with this SDK
     });
     console.log(reponse);
     ```
+    
+    ***Response***
+    ```json
+    {
+    "code": "00",
+    "data":  
+    [
+        {
+        "accountName": "Aminu Nasar",
+        "accountNumber": "7966884043",
+        "balanceAmount": 372555,
+        "transactionDate": "2021-10-13T13:45:52"
+        },
+        {
+        "accountName": "Khalid Ali Sani",
+        "accountNumber": "1234567890",
+        "balanceAmount": 200,
+        "transactionDate": "2021-12-13T13:45:52"
+        },
+        {
+        "accountName": "Nura Bala Usman",
+        "accountNumber": "9900778833",
+        "balanceAmount": 105000,
+        "transactionDate": "2022-01-29T13:45:52"
+        }
+    ],
+    "description": "successful",
+    "status": "Success"
+    }                 
+    ```
 
-## 10. Get Bank List
-- This request enables a merchant to get the list of banks supported by Zainpay. To get the list of banks supported by Zainpay GET the json payload below.
+### 8. Virtual Account Transactions
+- This request eanbles you to get all transactions of an account
+    
+    **Parameter:** zainboxCode(required)
+    ```js
+    const reponse = await Zainpay({
+        publicKey: PUBLIC_KEY,
+        serviceType: serviceTypes.ZAINBOX_TRANSACTIONS,
+        sandbox: true,
+        params: "{accountNumber}"
+    });
+    console.log(reponse);
+    ```
+
+    ***Response***
+    ```json
+    {
+        "code": "00",
+        "data": 
+        [
+        {
+            "accountNumber": "7966884043",
+            "destinationAccountNumber": "2000002105",
+            "amount": 7289,
+            "balance": 379844,
+            "narration": "",
+            "transactionDate": "2021-10-13T13:41:39",
+            "transactionRef": "",
+            "transactionType": "transfer"
+        },
+        {
+            "accountNumber": "7966884043",
+            "destinationAccountNumber": "1234567890",
+            "amount": 7289,
+            "balance": 372555,
+            "narration": "",
+            "transactionDate": "2021-10-13T13:45:52",
+            "transactionRef": "",
+            "transactionType": "transfer"
+        }
+        ],
+            "description": "successful",
+            "status": "Success"
+    }  
+    ```
+
+
+## 9. Get Bank List
+- This request enables a merchant to get the list of banks supported by Zainpay. 
     
    ```js
     const reponse = await Zainpay({
@@ -251,86 +400,45 @@ The following services are available with this SDK
     });
     console.log(reponse);
     ```
-## 11. Name Enquiry
-- This request enables a merchant to get the name of a bank account holder. To get the name of a bank account holder GET the json payload below.
-    
-   ```js
-    const reponse = await Zainpay({
-        publicKey: PUBLIC_KEY,
-        serviceType: serviceTypes.NAME_ENQUIRY,
-        sandbox: true,
-        params: "?bankCode={bankCode}&accountNumber={accountNumber}"
 
-    });
-    console.log(reponse);
+    ***Response***
+    ```json
+    {
+    "code": "00",
+    "data": [
+        {
+        "code": "120001",
+        "name": "9PAYMENT SERVICE BANK"
+        },
+        {
+        "code": "090270",
+        "name": "AB MICROFINANCE BANK"
+        },
+        {
+        "code": "070010",
+        "name": "ABBEY MORTGAGE BANK"
+        }
+        ],
+    "description": "Bank list",
+    "status": "Success"
+    }
     ```
+## 10. Create Settlement
+- This request enables a merchant to create a scheduled settlement for a zainbox. To create a scheduled settlement for a zainbox., please bear in mind that at any given time, a zainbox can only have one type of settlement.
 
-## 12. Funds Transfer
-- This request enables a merchant to transfer funds from a virtual account to a bank account. To transfer funds from a virtual account to a bank account POST the json payload below.
-    
-   ```js
-    const reponse = await Zainpay({
-        publicKey: PUBLIC_KEY,
-        serviceType: serviceTypes.FUNDS_TRANSFER,
-        sandbox: true,
-        data: {
-          "destinationAccountNumber": "0044159752",
-          "destinationBankCode": "000005",
-          "amount": "9997",
-          "sourceAccountNumber": "7966884043",
-          "sourceBankCode": "0013",
-          "zainboxCode": "{zainbox-codeName}",
-          "txnRef": "2Zei390tghmnj",
-          "narration": "Your school fees"
-        }                
-          
-    });
-    console.log(reponse);
-    ```
+Planned settlements are divided into three categories:
+- T1: **Transaction plus one working day** The value of the T1 schedule. The period must always be on a daily basis.
+- T2: **Trasaction plus 7 days** Transaction plus seven days for T7 schedule should be one of Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, or Sunday.
+- T3: **Transaction plus 30 days** The schedule Period value for T30 should be 1 - 30 or lastDayOfMonth
 
-## 13. Transfer Verification
-- This request enables a merchant to verify the status of a transfer. To verify the status of a transfer GET the json payload below.
-    
-   ```js
-    const reponse = await Zainpay({
-        publicKey: PUBLIC_KEY,
-        serviceType: serviceTypes.TRANSFER_VERIFICATION,
-        sandbox: true,
-        params: "{txnRef}"
-    });
-    console.log(reponse);
-    ```
+***Important Note**
+- Days like February 28th and February 29th, as well as months with only 30 days, will be covered by lastDayOfMonth.
 
+The payload's settlementAccountList parameter is an array/list of bank accounts with their corresponding settlement percentages.
 
-## 14. Deposit Verification
-- This request enables a merchant to verify the status of a deposit. To verify the status of a deposit GET the json payload below.
-    
-   ```js
-    const reponse = await Zainpay({
-        publicKey: PUBLIC_KEY,
-        serviceType: serviceTypes.DEPOSIT_VERIFICATION,
-        sandbox: true,
-        params: "{txnRef}"
-    });
-    console.log(reponse);
-    ```    
+***Scenario:***
+- Let's say you have a zainbox with three virtual accounts, and you want to set it up so that the total deposits in these three virtual accounts are split between two accounts at every Transaction plus one day (T1). The first settlement account has 90% of the funds, whereas the second contains only 10%.
 
-## 15. Total Payment Collected By Zainbox
-- This request enables a merchant to get the total payment collected by a zainbox. To get the total payment collected by a zainbox GET the json payload below.
-    
-   ```js
-    const reponse = await Zainpay({
-        publicKey: PUBLIC_KEY,
-        serviceType: serviceTypes.TOTAL_PAYMENT_COLLECTED,
-        sandbox: true,
-        params: "{zainbox-codeName}?dateFrom=2022-02&dateTo=2022-03"
-    });
-    console.log(reponse);
-    ```
-  
-## 16. Create Scheduled Settlement
-- This request enables a merchant to create a scheduled settlement for a zainbox. To create a scheduled settlement for a zainbox POST the json payload below.
-    
    ```js
     const reponse = await Zainpay({
         publicKey: PUBLIC_KEY,
@@ -359,9 +467,21 @@ The following services are available with this SDK
     console.log(reponse);
     ```
 
-## 17. Get Settlement
-- This request enables a merchant to get a scheduled settlement for a zainbox. To get a scheduled settlement for a zainbox GET the json payload below.
-    
+    ***Response***
+    ```json
+    {
+        "name": "new-daily-settlement3", 
+        "scheduleType": "T30", 
+        "schedulePeriod": "Daily", 
+        "zainboxCode": "THbfnDvK5op", 
+        "status": true 
+    } 
+    ```
+
+## 11. Get Settlement
+- This request enables a merchant to get settlement(s) tied to a zainbox
+
+    **Parameter:** zainboxCode(required)
    ```js
     const reponse = await Zainpay({
         publicKey: PUBLIC_KEY,
@@ -373,62 +493,391 @@ The following services are available with this SDK
     ```
 
 
-## 18. Validate OTP for Card Transaction
-- This request enables a merchant to validate the OTP for a card transaction. To validate the OTP for a card transaction POST the json payload below.
+## 12. Name Enquiry
+- Use the bankCode acquired from the get bank list to validate a bank account number.
     
+    **Parameter:** bankCode(required), accountNumber(required)
    ```js
     const reponse = await Zainpay({
         publicKey: PUBLIC_KEY,
-        serviceType: serviceTypes.VALIDATE_OTP,
+        serviceType: serviceTypes.NAME_ENQUIRY,
         sandbox: true,
-        data: {
-            "otp":"{otp}",
-            "sessionId":"{sessionId}"
-        }
+        params: "?bankCode={bankCode}&accountNumber={accountNumber}"
+
     });
     console.log(reponse);
     ```
 
+    ***Response***
+    ```json
+    {
+        "code": "00",
+        "data": {
+            "accountName": "Nura Aminu Muhammad",
+            "accountNumber": "004532112",
+            "bankCode": "000014",
+            "bankName": "ACCESS BANK"
+        },
+        "description": "successful",
+        "status": "Success"
+    }
+    ```
 
-## 19. Validate Card
-- This request enables a merchant to validate a card. To validate a card POST the json payload below.
+## 13. Funds Transfer
+- Fund transfers can be made in the following ways: 
+    - Transferring money from one wallet to another
+    - Make a bank account transfer from your wallet
+    
+    Zainpay infers your fund transfer type, so you don't have to specify it. The charges for each form of transfer are different. This charge can be obtained through your commercials.
+
+    **Important Note:**
+    - The amount in the JSON request should be converted to kobo decimalization. It is expected that neither float nor double values will be utilized in this case.
+
     
    ```js
     const reponse = await Zainpay({
         publicKey: PUBLIC_KEY,
-        serviceType: serviceTypes.VALIDATE_CARD,
+        serviceType: serviceTypes.FUNDS_TRANSFER,
         sandbox: true,
         data: {
-            "sessionId":"{sessionId}",
-            "cardEncryptedData":"{cardEncryptedData}"
-        }
+          "destinationAccountNumber": "0044159752",
+          "destinationBankCode": "000005",
+          "amount": "9997",
+          "sourceAccountNumber": "7966884043",
+          "sourceBankCode": "0013",
+          "zainboxCode": "{zainbox-codeName}",
+          "txnRef": "2Zei390tghmnj",
+          "narration": "Your school fees"
+        }                
+          
     });
     console.log(reponse);
     ```
 
+    ***Response***
+    ```json
+    {
+        "code": "01",
+        "description": "successful queued",
+        "status": "Queued"
+    }
+    ```
 
-<!-- initialize payment -->
+    - A queued response means the transaction has successfully been validated and been processed. The final response should be accepted as an event push notification via the zainbox callback URL provided.
+
+
+    ***Event Notification for a successful Transaction***
+    ```json
+    {
+        "data": {
+        "accountNumber": "7964524199",
+        "amount": {
+        "amount": 2015 
+        },
+        "beneficiaryAccountNumber": "7964524199",
+        "beneficiaryBankCode": "0013",
+        "narration": "inter bank transfers",
+        "paymentRef": "BSTuvDYbGIy8krkoycY1",
+        "txnDate": "2021-12-28T18:19:42.222226518",
+        "txnRef": "121mqn1s",
+        "txnType": "transfer"
+        },
+        "event": "transfer.success"
+    }
+    ```
+
+
+
+## 14. Transfer Verification
+- The request can be used to verify a posted transfer by its txnRef acquired after successful Funds Transfer
+
+   **Parameter:** txnRef(required).
+    
+   ```js
+    const reponse = await Zainpay({
+        publicKey: PUBLIC_KEY,
+        serviceType: serviceTypes.TRANSFER_VERIFICATION,
+        sandbox: true,
+        params: "{txnRef}"
+    });
+    console.log(reponse);
+    ```
+
+    ***Response***
+    ```json
+    {
+        "code": "00",
+        "data": {
+            "amount": "8431",
+            "destinationAccountNumber": "0044159752",
+            "destinationBankCode": "000005",
+            "narration": "lunch for naimat",
+            "sourceAccountNumber": "7964524199",
+            "txnDate": "2021-12-29T08:00:49",
+            "txnStatus": "success"
+        },
+        "description": "successful",
+        "status": "Success"
+    }
+    ```
+
+
+## 15. Deposit Verification
+- The request can be used to verify a funds deposit notification received via our Deposit WebHook notification event
+    
+    **Parameter:** txnRef(required). The txnRef sent in the webhoook notificatoin payload.
+
+   ```js
+    const reponse = await Zainpay({
+        publicKey: PUBLIC_KEY,
+        serviceType: serviceTypes.DEPOSIT_VERIFICATION,
+        sandbox: true,
+        params: "{txnRef}"
+    });
+    console.log(reponse);
+    ```
+
+    ***Response for valid reference***
+    ```json
+    {
+        "code": "00",
+        "data": {
+            "amount": {
+                "amount": 189000
+            },
+            "bankName": "WEMA BANK",
+            "beneficiaryAccountName": "4426141954",
+            "beneficiaryAccountNumber": "4426141954",
+            "narration": "Transfer from Nura M Bello Garindau IDFinder ",
+            "paymentDate": "2022-08-23T18:56:48.718614",
+            "paymentRef": "DI59Ul5jhKyQIOUzDfVm",
+            "sender": "4425640169",
+            "senderName": "4425640169",
+            "txnDate": "2022-08-23T18:56:48.718441",
+            "txnRef": "vat_1661281008padGWEQEYY",
+            "txnType": "deposit",
+            "zainboxCode": "oD6mV9U1wH6n8NvFMxrc"
+        },
+        "description": "successful",
+        "status": "Success"
+    }
+    ```
+
+    ***Response for invalid reference***
+    ```json
+    {
+        "code": "04",
+        "description": "Txn not found",
+        "status": "Failed"
+    }    
+    ```
+
+### 16. Zainbox Transactions History
+- This request enables you to Get a list of transactions from a particular zainbox
+
+  **Parameter:** zainboxCode(Required)
+    
+   ```js
+    const reponse = await Zainpay({
+        publicKey: PUBLIC_KEY,
+        serviceType: serviceTypes.ZAINBOX_TRANSACTIONS,
+        sandbox: true,
+        params: "{zainbox-codeName}"
+    });
+    console.log(reponse);
+    ```
+
+    ***Response***
+    ```json
+    {
+        "code": "00",
+        "data": [
+        {
+            "accountNumber": "7964524199",
+            "amount": 45000,
+            "balance": 45000,
+            "narration": "",
+            "transactionDate": "2021-12-28T11:47:45",
+            "transactionRef": "",
+            "transactionType": "deposit"
+        },
+        {
+            "accountNumber": "7964524199",
+            "amount": 923000,
+            "balance": 968000,
+            "narration": "",
+            "transactionDate": "2021-12-28T11:48:35",
+            "transactionRef": "",
+            "transactionType": "deposit"
+        }],
+        "description": "successful",
+        "status": "Success"
+    }
+    ```
+
+## 17. Total Payment Collected By Zainbox
+- Get the sum of total amount collected by all virtual accounts for a particular zainbox in a particular period, for both transfer and deposit transactions
+
+    **Parameter:** zainboxCode (Required), dateFrom (optional, if not provided, the system returns the data of the current month), dateTo (optional)
+    
+   ```js
+    const reponse = await Zainpay({
+        publicKey: PUBLIC_KEY,
+        serviceType: serviceTypes.TOTAL_PAYMENT_COLLECTED,
+        sandbox: true,
+        params: "{zainbox-codeName}?dateFrom=2022-02&dateTo=2022-03"
+    });
+    console.log(reponse);
+    ```
+
+    ***Response***
+    ```json
+    {
+    "code": "00",
+    "data": [
+    {
+        "count": 4,
+        "dateFrom": "2022-02",
+        "dateTo": "2022-03",
+        "total": "12690",
+        "transactionType": "deposit"
+    },
+        {
+        "count": 4,
+        "dateFrom": "2022-02",
+        "dateTo": "2022-03",
+        "total": "29038",
+        "transactionType": "transfer"
+    }
+    ],
+    "description": "Summary grouped by txn type",
+    "status": "Success"
+    }
+    ```
+
+### 18. Zainbox Profile and Current Billing Plan
+- Get the complete profile of a Zainbox, including the Current Billing Plan for account to account and interBank transfers respectively
+    
+   ```js
+    const reponse = await Zainpay({
+        publicKey: PUBLIC_KEY,
+        serviceType: serviceTypes.ZAINBOX_PROFILE,
+        sandbox: true,
+        params: "{zainbox-codeName}"
+    });
+    console.log(reponse);
+
+    ```
+    ***Response***
+    ```json
+    {
+    "code": "00",
+    "description": "successful",
+    "status": "Success",
+    "data": {
+        "zainbox": {
+            "callbackUrl": "http://localhost:5000/notification",
+            "codeName": "THbfnDvK5o",
+            "name": "test-box",
+            "tags": "land, management"
+        },
+        "account2AccountBilling": {
+            "fixedCharge": "1000",
+            "percentageCharge": 1.5
+        },
+        "interBankBilling": {
+            "fixedCharge": "5000.0",
+            "percentageCharge": 1.4
+        }
+    }
+    
+    }
+    ```
+
+
+### 19. Merchant Transactions
+- This request enables you to get the list of first 50 transactions of a merchant
+    
+   ```js
+    const reponse = await Zainpay({
+        publicKey: PUBLIC_KEY,
+        serviceType: serviceTypes.MERCHANT_TRANSACTIONS,
+        sandbox: true,
+    });
+    console.log(reponse);
+    ```
+
+    ***Response***
+    ```json
+    {
+    "code": "00",
+    "data": 
+    [
+    {
+        "accountNumber": "7964524199",
+        "amount": 45000,
+        "balance": 45000,
+        "narration": "",
+        "transactionDate": "2021-12-28T11:47:45",
+        "transactionRef": "",
+        "transactionType": "deposit"
+    },
+    {
+        "accountNumber": "7964524199",
+        "amount": 923000,
+        "balance": 968000,
+        "narration": "",
+        "transactionDate": "2021-12-28T11:48:35",
+        "transactionRef": "",
+        "transactionType": "deposit"
+        }
+    ],
+    "description": "successful",
+    "status": "Success"
+    }
+    ```
+
+
 ## 20. Initialize Payment
-- This request enables a merchant to initialize a card payment. To initialize a payment POST the json payload below.
-    
-   ```js
-    const reponse = await Zainpay({
-        publicKey: PUBLIC_KEY,
-        serviceType: serviceTypes.INITIALIZE_PAYMENT,
-        sandbox: true,
-        data: {
-            "amount": "100", 
-            "txnRef" : "{txnRef}", 
-            "mobileNumber": "08068869098", 
-            "zainboxCode": "{zainbox-codeName}", 
-            "emailAddress": "{email}",
-            "successCallBackUrl" : "http://loclhost:8080/success",
-            "failureCallBackUrl" : "http://loclhost:8080/failure"
-        }
-    });
-    console.log(reponse);
+- This request enables a merchant to initialize a card payment.
+The **data** field of the response returned is a url which you can redirect your users to visit and make the payment.
+
+    **Parameter:** email, amount, txnRef (unique per each request), mobileNumber, zainboxCode, emailAddress and callBackUrl.
+    Please Note that all parameters are required. The amount parameter should be in kobo decimilization.
+
+    ```js
+        const reponse = await Zainpay({
+            publicKey: PUBLIC_KEY,
+            serviceType: serviceTypes.INITIALIZE_PAYMENT,
+            sandbox: true,
+            data: {
+                "amount": "100", 
+                "txnRef" : "{txnRef}", 
+                "mobileNumber": "08068869098", 
+                "zainboxCode": "{zainbox-codeName}", 
+                "emailAddress": "{email}",
+                "successCallBackUrl" : "http://loclhost:8080/success",
+                "failureCallBackUrl" : "http://loclhost:8080/failure"
+            }
+        });
+        console.log(reponse);
+    ```
+    ***Response***
+    ```json
+        {
+            "code": "00",
+            "data":
+                "https://dev.zainpay.ng/merchant/redirect-payment?e=V5fvxGjb8wwLvOPZXYyaNMlVZSDrkAdv4ne
+                19X7uiCdqu0kNOOAkMcjbGjApMcivvyLb4vj4azuusyWqC87vtME5n1psVTXai0pIdH61aTdrWJhQF
+                CuYV3a7xJSWiNdDndxh2zNQNl74l2gUpQwhniASWarYUXLl2soyAUAkeAPJ1pUPlTmZddNiYqzgS
+                MhoO1T4OMWk",
+            "description": "card processing initialization",
+            "status": "200 OK"
+        }  
     ```
 
+
+<!-- 
 ## 21. Retrieve Payment Info
 - This request enables a merchant to retrieve card payment info. To retrieve payment info GET the json payload below.
     
@@ -440,5 +889,71 @@ The following services are available with this SDK
         params: "?e={sessionId}"
     });
     console.log(reponse);
+    ``` -->
+
+## 21. Get Card Payment Status
+- This endpoint is used to retrieve initiated payment status
+    
+   ```js
+    const reponse = await Zainpay({
+        publicKey: PUBLIC_KEY,
+        serviceType: serviceTypes.GET_CARD_PAYMENT_STATUS,
+        sandbox: true,
+        params: "{txnRef}"
+    });
+    console.log(reponse);
     ```
+
+    ***Response***
+    ```json
+    {
+        "code": "00",
+        "data": {
+            "amount": {
+                "amount": 100
+            },
+            "bankName": "",
+            "beneficiaryAccountName": "4427505285",
+            "beneficiaryAccountNumber": "4427505285",
+            "narration": "Approved by Financial Institution",
+            "paymentDate": "2022-08-09T15:56:01.686777",
+            "paymentRef": "Z9I8XkNRta1hq2dlmMzlhwQ9F60dLw",
+            "sender": "Zainpay Card",
+            "senderName": "Zainpay Card",
+            "txnDate": "2022-08-09T15:56:01.685982",
+            "txnRef": "Q6166237864",
+            "txnType": "deposit",
+            "zainboxCode": "THbfnDvK5o"
+        },
+        "description": "successful",
+        "status": "200 OK"
+    }
+    ```
+
+## 22. Test Cards
+- The following cards can be used in the sandbox to make payments.
+
+    **Verve Card**
+    - 8920 6700 9023 471093
+        - Expiry Date: 50/05
+        - CVV: 390
+        - Pin: 1234
+        - OTP: 001122
+
+    **Master Card**
+    - 8930 6206 2217 9837
+        - Expiry Date: 50/01
+        - CVV: 738
+        - Pin: 1111
+        - OTP: 206221
+
+**Acceptable Cards**
+    - Verve
+    - MasterCard
+    - Visa
+    - Union Pay
+    - JCB
+    - Discover
+    - American Experess
+
 

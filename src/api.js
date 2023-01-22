@@ -32,32 +32,39 @@ async function Zainpay(param) {
         sandbox = false
     }
 
-    const baseUrl = getUrl(sandbox);
-    const axiosStruct = await axios.create({
-        baseURL: baseUrl,
-        headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + publicKey,
-        },
-    });
+    try {
+        const baseUrl = getUrl(sandbox);
+        const axiosStruct = await axios.create({
+            baseURL: baseUrl,
+            headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + publicKey,
+            },
+        });
 
-    let { url, method } = serviceTypes[serviceType.name];
+        let { url, method } = serviceTypes[serviceType.name];
 
-    if (params) {
-        url = url + "/" + params;
+        if (params) {
+            url = url + "/" + params;
+        }
+
+        const response = axiosStruct[method](url, data)
+            .then(function (response) {
+                if (response.status === 200) {
+                    return response.data
+                }
+            })
+            .catch(function (error) {
+                return error.response.data
+        });
+
+        return await response;
+        
+    } catch (error) {
+        return {
+            error: "Request Failed"
+        }
     }
-
-    const response = axiosStruct[method](url, data)
-        .then(function (response) {
-            if (response.status === 200) {
-                return response.data
-            }
-        })
-        .catch(function (error) {
-            return error.response.data
-    });
-          
-    return await response;
 }
 
 module.exports = {

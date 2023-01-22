@@ -29,6 +29,12 @@ module.exports = {
         url: 'zainbox/virtual-accounts',
         method: 'get',
     },
+    VIRTUAL_ACCOUNT_TRANSACTIONS: {
+        name: "VIRTUAL_ACCOUNT_TRANSACTIONS",
+        url: '/virtual-account/wallet/transactions',
+        method: 'get',
+    },
+
     UPDATE_VIRTUAL_ACCOUNT_STATUS: {
         name: "UPDATE_VIRTUAL_ACCOUNT_STATUS",
         url: '/virtual-account/change/account/status',
@@ -107,6 +113,11 @@ module.exports = {
     RETRIEVE_PAYMENT_INFO: {
         name: "RETRIEVE_PAYMENT_INFO",
         url: '/zainbox/card/retrieve/payment/info',
+        method: 'get',
+    },
+    GET_CARD_PAYMENT_STATUS: {
+        name: "GET_CARD_PAYMENT_STATUS",
+        url: '/virtual-account/wallet/deposit/verify',
         method: 'get',
     }
 }
