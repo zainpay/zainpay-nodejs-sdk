@@ -55,7 +55,7 @@ Instantiate the Zainpay class
       "address": "Gidado street Kano",
       "title": "Mr",
       "state": "Kano",
-      "zainboxCode": "{zainbox-codeName}"
+      "zainboxCode": "{zainboxCode}"
   }
   });
   console.log(reponse);
@@ -69,8 +69,8 @@ The Zainpay class takes in the following parameters:
 - **publicKey** - This is your public key, which can be found on your [dashboard](https://zainpay.ng/merchant/dashboard/settings).
 - **serviceType** - This is the service you want to use, for example, `CREATE_VIRTUAL_ACCOUNT`.
 - **sandbox** - This is a boolean value, if set to true, it will use the [sandbox](https://sandbox.zainpay.ng/) API, if set to false, it will use the [production(live)](https://api.zainpay.ng/) API.
-- **data** - This is the data you want to send to the API, for example, the payload for creating a virtual account.
-- **params** - This is the data you want to send to the API, for example, the payload for getting a virtual account.
+- **data** - This is the data you want to post as a payload, for example, the payload for creating a virtual account.
+- **params** - This is the params you want querying the strings, for example, the params for getting a virtual account.
 
 
 - For more information about the services exposed by the SDK, please refer to the [documentation](https://zainpay.ng/developers/).
@@ -176,12 +176,13 @@ The following services are available with this SDK
 - Create a virtual account. Map a virtual account to a zainbox. A zainbox can hold multiple virtual accounts.
 
     ```js
+
     const reponse = await Zainpay({
         publicKey: PUBLIC_KEY,
         serviceType: serviceTypes.CREATE_VIRTUAL_ACCOUNT,
         sandbox: true,
         data: {
-            "bankType": "wemaBank, 
+            "bankType": "wemaBank", 
             "firstName": "kabir",
             "surname": "idris", 
             "email": "binkabir@gmail.com", 
@@ -191,7 +192,7 @@ The following services are available with this SDK
             "address": "aminu babandi", 
             "title": "Mr", 
             "state": "Kano", 
-            "zainboxCode": "{zainbox-codeName}"
+            "zainboxCode": "{zainboxCode}"
         }
     });
     console.log(reponse);
@@ -214,7 +215,7 @@ The following services are available with this SDK
         publicKey: PUBLIC_KEY,
         serviceType: serviceTypes.VIRTUAL_ACCOUNTS,
         sandbox: true,
-        params: "{zainbox-codeName}"
+        params: "{zainboxCode}"
     });
     console.log(reponse);
     ```
@@ -280,7 +281,7 @@ The following services are available with this SDK
         serviceType: serviceTypes.UPDATE_VIRTUAL_ACCOUNT_STATUS,
         sandbox: true,
         data: {
-          "zainboxCode": "{zainbox-codeName}", 
+          "zainboxCode": "{zainboxCode}", 
           "accountNumber": "7963799062", 
           "status": true 
         }
@@ -288,14 +289,14 @@ The following services are available with this SDK
     console.log(reponse);
     ```
  
-***Response***
-```json
+    ***Response***
+    ```json
         {
             "code": "00",
             "description": "Successfully Updated Account",
             "status": "success"
         }
-```
+    ```
 
 
 ### 7. All Virtual Account Balance of a Zainbox
@@ -307,7 +308,7 @@ The following services are available with this SDK
         publicKey: PUBLIC_KEY,
         serviceType: serviceTypes.ALL_VIRTUAL_ACCOUNT_BALANCE,
         sandbox: true,
-        params: "{zainbox-codeName}"
+        params: "{zainboxCode}"
     });
     console.log(reponse);
     ```
@@ -446,7 +447,7 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
         sandbox: true,
         data: {
             "name": "new-daily-settlement3",
-            "zainboxCode": "{zainbox-codeName}",
+            "zainboxCode": "{zainboxCode}",
             "scheduleType": "T1",
             "schedulePeriod": "Daily",
             "settlementAccountList": [
@@ -487,7 +488,7 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
         publicKey: PUBLIC_KEY,
         serviceType: serviceTypes.GET_SCHEDULED_SETTLEMENT,
         sandbox: true,
-        params: "?zainboxCode={zainbox-codeName}"
+        params: "?zainboxCode={zainboxCode}"
     });
     console.log(reponse);
     ```
@@ -545,7 +546,7 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
           "amount": "9997",
           "sourceAccountNumber": "7966884043",
           "sourceBankCode": "0013",
-          "zainboxCode": "{zainbox-codeName}",
+          "zainboxCode": "{zainboxCode}",
           "txnRef": "2Zei390tghmnj",
           "narration": "Your school fees"
         }                
@@ -682,7 +683,7 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
         publicKey: PUBLIC_KEY,
         serviceType: serviceTypes.ZAINBOX_TRANSACTIONS,
         sandbox: true,
-        params: "{zainbox-codeName}"
+        params: "{zainboxCode}"
     });
     console.log(reponse);
     ```
@@ -725,7 +726,7 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
         publicKey: PUBLIC_KEY,
         serviceType: serviceTypes.TOTAL_PAYMENT_COLLECTED,
         sandbox: true,
-        params: "{zainbox-codeName}?dateFrom=2022-02&dateTo=2022-03"
+        params: "{zainboxCode}?dateFrom=2022-02&dateTo=2022-03"
     });
     console.log(reponse);
     ```
@@ -758,12 +759,14 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
 ### 18. Zainbox Profile and Current Billing Plan
 - Get the complete profile of a Zainbox, including the Current Billing Plan for account to account and interBank transfers respectively
     
+    **Parameter:** zainboxCode (Required)
+    
    ```js
     const reponse = await Zainpay({
         publicKey: PUBLIC_KEY,
         serviceType: serviceTypes.ZAINBOX_PROFILE,
         sandbox: true,
-        params: "{zainbox-codeName}"
+        params: "{zainboxCode}"
     });
     console.log(reponse);
 
@@ -854,7 +857,7 @@ The **data** field of the response returned is a url which you can redirect your
                 "amount": "100", 
                 "txnRef" : "{txnRef}", 
                 "mobileNumber": "08068869098", 
-                "zainboxCode": "{zainbox-codeName}", 
+                "zainboxCode": "{zainboxCode}", 
                 "emailAddress": "{email}",
                 "successCallBackUrl" : "http://loclhost:8080/success",
                 "failureCallBackUrl" : "http://loclhost:8080/failure"
