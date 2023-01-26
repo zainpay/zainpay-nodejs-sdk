@@ -245,7 +245,7 @@ The following services are available with this SDK
     const reponse = await Zainpay({
         publicKey: PUBLIC_KEY,
         serviceType: serviceTypes.VIRTUAL_ACCOUNT_BALANCE,
-        params: "{virtual-account-number}"
+        params: "{virtualAccoutNumber}"
         sandbox: true,
     });
     console.log(reponse);
@@ -346,7 +346,7 @@ The following services are available with this SDK
 ### 8. Virtual Account Transactions
 - This request eanbles you to get all transactions of an account
     
-    **Parameter:** zainboxCode(required)
+    **Parameter:** accountNumber(required)
     ```js
     const reponse = await Zainpay({
         publicKey: PUBLIC_KEY,
@@ -869,11 +869,7 @@ The **data** field of the response returned is a url which you can redirect your
     ```json
         {
             "code": "00",
-            "data":
-                "https://dev.zainpay.ng/merchant/redirect-payment?e=V5fvxGjb8wwLvOPZXYyaNMlVZSDrkAdv4ne
-                19X7uiCdqu0kNOOAkMcjbGjApMcivvyLb4vj4azuusyWqC87vtME5n1psVTXai0pIdH61aTdrWJhQF
-                CuYV3a7xJSWiNdDndxh2zNQNl74l2gUpQwhniASWarYUXLl2soyAUAkeAPJ1pUPlTmZddNiYqzgS
-                MhoO1T4OMWk",
+            "data": "https://dev.zainpay.ng/merchant/redirect-payment?e=V5fvxGjb8wwLvOPZXYyaNMlVZSDrkAdv4ne19X7uiCdqu0kNOOAkMcjbGjApMcivvyLb4vj4azuusyWqC87vtME5n1psVTXai0pIdH61aTdrWJhQFCuYV3a7xJSWiNdDndxh2zNQNl74l2gUpQwhniASWarYUXLl2soyAUAkeAPJ1pUPlTmZddNiYqzgSMhoO1T4OMWk",
             "description": "card processing initialization",
             "status": "200 OK"
         }  
