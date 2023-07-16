@@ -112,11 +112,12 @@ The following services are available with this SDK
         serviceType: serviceTypes.CREATE_ZAINBOX,
         sandbox: true,
         data: {
-          "name":"tesSSt.Onliness",
+          "name":"wecode-contribution",
           "tags": "test",
           "codeNamePrefix": "333",
           "callbackUrl": "https://www-test-a3ef.restdb.io/wlistener",
-          "email": "info@test.onlines"
+          "emailNotification": "info@test.onlines", 
+          "allowAutoInternalTransfer": false,
         }
     });
     console.log(reponse);
@@ -129,7 +130,7 @@ The following services are available with this SDK
         "status": "Success",
         "description": "successful",
         "data": {
-            "codeName": "zB2lg6lJtcGzP5XqouN9",
+            "codeName": "333_zB2lg6lJtcGzP5XqouN9",
             "name": "wecode-contribution"
         }
     } 
@@ -183,13 +184,14 @@ The following services are available with this SDK
         sandbox: true,
         data: {
             "bankType": "wemaBank", 
-            "firstName": "kabir",
-            "surname": "idris", 
-            "email": "binkabir@gmail.com", 
-            "mobileNumber": "08068869000", 
+            "firstName": "Saminu",
+            "middleName": "Sunday",
+            "surname": "Jonh", 
+            "email": "johnsaminu@gmail.com", 
+            "mobileNumber": "08012345678", 
             "dob": "12-08-1999", 
             "gender": "M", 
-            "address": "aminu babandi", 
+            "address": "No 21 AA Rufa'i street, Kano", 
             "title": "Mr", 
             "state": "Kano", 
             "zainboxCode": "{zainboxCode}"
@@ -200,10 +202,11 @@ The following services are available with this SDK
     ***Response***
     ```json
     {
-        "accountName": "Samuel Sunday Bello",
+        "accountName": "John Saminu Sunday",
         "accountNumber": "4426334208", 
+        "accountType": "",
         "bankName": "wemaBank",
-        "email": "bellosamuelsunday@gmail.com"
+        "email": "johnsaminu@gmail.com"
     }
     ```
 ### 4. Get Virtual Accounts
@@ -224,9 +227,9 @@ The following services are available with this SDK
     ```json
     [
         {
-            "bankAccount": "7966903286",
+            "bankAccount": "4426334208",
             "bankName": "035",
-            "name": "Go fundme Limited"
+            "name": "John Saminu Sunday"
         },
         {
             "bankAccount": "7969472891",
@@ -299,7 +302,7 @@ The following services are available with this SDK
     ```
 
 
-### 7. All Virtual Account Balance of a Zainbox
+### 7. All Virtual Account Balances of a Zainbox
 - This request enables a merchant to fetches all current account balances for all virtual accounts in a zainbox.
     
     **Parameter:** zainboxCode(required)
@@ -346,13 +349,13 @@ The following services are available with this SDK
 ### 8. Virtual Account Transactions
 - This request eanbles you to get all transactions of an account
     
-    **Parameter:** accountNumber(required)
+    **Parameter:** accountNumber(required), recordsCount(option, default is 20)
     ```js
     const reponse = await Zainpay({
         publicKey: PUBLIC_KEY,
-        serviceType: serviceTypes.ZAINBOX_TRANSACTIONS,
+        serviceType: serviceTypes.VIRTUAL_ACCOUNT_TRANSACTIONS,
         sandbox: true,
-        params: "{accountNumber}"
+        params: "{accountNumber}/{recordsCount}"
     });
     console.log(reponse);
     ```
@@ -548,7 +551,8 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
           "sourceBankCode": "0013",
           "zainboxCode": "{zainboxCode}",
           "txnRef": "2Zei390tghmnj",
-          "narration": "Your school fees"
+          "narration": "Your school fees",
+          "callBackUrl": "https://myapp.exmaple.net/transfer/notification"
         }                
           
     });
@@ -841,7 +845,7 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
     ```
 
 
-## 20. Initialize Payment
+## 20. Initialize Card Payment
 - This request enables a merchant to initialize a card payment.
 The **data** field of the response returned is a url which you can redirect your users to visit and make the payment.
 
@@ -854,14 +858,13 @@ The **data** field of the response returned is a url which you can redirect your
             serviceType: serviceTypes.INITIALIZE_PAYMENT,
             sandbox: true,
             data: {
-                "amount": "100", 
-                "txnRef" : "{txnRef}", 
-                "mobileNumber": "08068869098", 
-                "zainboxCode": "{zainboxCode}", 
-                "emailAddress": "{email}",
-                "successCallBackUrl" : "http://loclhost:8080/success",
-                "failureCallBackUrl" : "http://loclhost:8080/failure"
-            }
+                "amount": "100",
+                "txnRef" : "Q6166237864",
+                "mobileNumber": "08000000000",
+                "zainboxCode": "THbfnDvK5o",
+                "emailAddress": "info@test.com",
+                "callBackUrl" : "https://example.net/webhook/zainpay"
+            } 
         });
         console.log(reponse);
     ```
@@ -875,20 +878,6 @@ The **data** field of the response returned is a url which you can redirect your
         }  
     ```
 
-
-<!-- 
-## 21. Retrieve Payment Info
-- This request enables a merchant to retrieve card payment info. To retrieve payment info GET the json payload below.
-    
-   ```js
-    const reponse = await Zainpay({
-        publicKey: PUBLIC_KEY,
-        serviceType: serviceTypes.RETRIEVE_PAYMENT_INFO,
-        sandbox: true,
-        params: "?e={sessionId}"
-    });
-    console.log(reponse);
-    ``` -->
 
 ## 21. Get Card Payment Status
 - This endpoint is used to retrieve initiated payment status
