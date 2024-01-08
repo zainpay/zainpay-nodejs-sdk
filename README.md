@@ -96,6 +96,10 @@ The Zainpay class takes in the following parameters:
 - `GET_SCHEDULED_SETTLEMENT`
 - `INITIALIZE_PAYMENT`
 - `RETRIEVE_PAYMENT_INFO`
+- `GET_CARD_PAYMENT_STATUS`
+- `RECONCILE_CARD_PAYMENT`
+- `RECONCILE_DEPOSIT_PAYMENT`
+- `MAKE_RECURRING_CARD_PAYMENT`
 
 
 ## Available Services exposed by the SDK
@@ -104,7 +108,7 @@ The following services are available with this SDK
 
 ### 1. Create Zainbox
 - A zainbox is a virtual bucket that allows a merchant to create unlimited multiple virtual accounts.
-- This request enables a merchant to create a zainbox.
+- This endpoint enables a merchant to create a zainbox.
     
    ```js
     const reponse = await Zainpay({
@@ -139,7 +143,7 @@ The following services are available with this SDK
 
 
 ### 2. Get All ZainBoxes
-- This request enables a merchant to get all your created zainboxes.
+- This request enables a merchant to get all his zainboxes.
 
    ```js
     const reponse = await Zainpay({
@@ -174,7 +178,7 @@ The following services are available with this SDK
     ```
 
 ### 3. Create Virtual Account
-- Create a virtual account. Map a virtual account to a zainbox. A zainbox can hold multiple virtual accounts.
+- This endpoint enables a merchant to create a virtual account and map it to a zainbox. A zainbox can hold multiple virtual accounts.
 
     ```js
 
@@ -210,7 +214,7 @@ The following services are available with this SDK
     }
     ```
 ### 4. Get Virtual Accounts
-- This request enables you to get all virtual accounts linked to a zainbox.
+- This endpoint enables a merchant to get all virtual accounts linked to a zainbox.
 
     **Parameter:** zainboxCode(required).
    ```js
@@ -240,7 +244,7 @@ The following services are available with this SDK
     ```
 
 ### 5. Get Virtual Account Balance
-- This request enables you to the current wallet balance of a virtual account number
+- This endpoint enables a merchant to get the current wallet balance of a virtual account number.
 
     **Parameter:** virtualAccoutNumber(required)
     
@@ -272,8 +276,8 @@ The following services are available with this SDK
     
 ### 6. Update Virtual Account Status
 
-- This request enables you to Activate or deactivate virtual account.
-- NOTE: Setting the status field to true will activate the virtual account, while setting it to false will deactivate it.
+- This endpoint enables a merchant to activate or deactivate virtual account.
+- NOTE: Setting the `status` field to `true` will activate the virtual account, while setting it to `false` will deactivate it.
 
     ***Important Note***
     A deactivated virtual account will not be able to receive or transfer funds
@@ -303,7 +307,7 @@ The following services are available with this SDK
 
 
 ### 7. All Virtual Account Balances of a Zainbox
-- This request enables a merchant to fetches all current account balances for all virtual accounts in a zainbox.
+- This endpoint enables a merchant to fetch all current account balances for all virtual accounts in a zainbox.
     
     **Parameter:** zainboxCode(required)
    ```js
@@ -323,7 +327,7 @@ The following services are available with this SDK
     "data":  
     [
         {
-        "accountName": "Aminu Nasar",
+        "accountName": "Aminu Nasar Adam",
         "accountNumber": "7966884043",
         "balanceAmount": 372555,
         "transactionDate": "2021-10-13T13:45:52"
@@ -347,9 +351,9 @@ The following services are available with this SDK
     ```
 
 ### 8. Virtual Account Transactions
-- This request eanbles you to get all transactions of an account
+- This endpoint enables a merchant to get all transactions of an account
     
-    **Parameter:** accountNumber(required), recordsCount(option, default is 20)
+    **Parameter:** accountNumber(required), recordsCount(optional, default is 20)
     ```js
     const reponse = await Zainpay({
         publicKey: PUBLIC_KEY,
@@ -394,7 +398,7 @@ The following services are available with this SDK
 
 
 ## 9. Get Bank List
-- This request enables a merchant to get the list of banks supported by Zainpay. 
+- This endpoint enables a merchant to get the list of banks supported by Zainpay. 
     
    ```js
     const reponse = await Zainpay({
@@ -428,7 +432,7 @@ The following services are available with this SDK
     }
     ```
 ## 10. Create Settlement
-- This request enables a merchant to create a scheduled settlement for a zainbox. To create a scheduled settlement for a zainbox., please bear in mind that at any given time, a zainbox can only have one type of settlement.
+- This endpoint enables a merchant to create a scheduled settlement for a zainbox. Please bear in mind that at any given time, a zainbox can only have one type of settlement.
 
 Planned settlements are divided into three categories:
 - T1: **Transaction plus one working day** The value of the T1 schedule. The period must always be on a daily basis.
@@ -483,7 +487,7 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
     ```
 
 ## 11. Get Settlement
-- This request enables a merchant to get settlement(s) tied to a zainbox
+- This endpoint enables a merchant to get settlement(s) tied to a zainbox
 
     **Parameter:** zainboxCode(required)
    ```js
@@ -498,7 +502,7 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
 
 
 ## 12. Name Enquiry
-- Use the bankCode acquired from the get bank list to validate a bank account number.
+- This endpoint enables a merchant to validate a bank account number.
     
     **Parameter:** bankCode(required), accountNumber(required)
    ```js
@@ -575,26 +579,32 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
     ```json
     {
         "data": {
-        "accountNumber": "7964524199",
-        "amount": {
-        "amount": 2015 
+            "depositedAmount": "100000",
+            "txnChargesAmount": "6400",
+            "amountAfterCharges": "93600",
+            "bankName": "ZainMFB",
+            "beneficiaryAccountName": "idris",
+            "beneficiaryAccountNumber": "7964524199",
+            "narration": "gift",
+            "paymentDate": "2021-12-28T11:48:35.044886444",
+            "paymentRef": "a1oA0ws127quism",
+            "sender": "900989098",
+            "senderName": "hassan ",
+            "txnDate": "2021-12-28T11:48:35.044777507",
+            "txnRef": "730003356",
+            "txnType": "deposit",
+            "zainboxCode": "xmaldoaYnakaAAVOAE",
+            "callBackUrl": "http://gofundme.ng/webhook",
+            "emailNotification": "user@user.com",
+            "zainboxName": "users",
         },
-        "beneficiaryAccountNumber": "7964524199",
-        "beneficiaryBankCode": "0013",
-        "narration": "inter bank transfers",
-        "paymentRef": "BSTuvDYbGIy8krkoycY1",
-        "txnDate": "2021-12-28T18:19:42.222226518",
-        "txnRef": "121mqn1s",
-        "txnType": "transfer"
-        },
-        "event": "transfer.success"
+        "event": "deposit.success"
     }
     ```
 
 
-
 ## 14. Transfer Verification
-- The request can be used to verify a posted transfer by its txnRef acquired after successful Funds Transfer
+- This endpoint enables a merchant to verify a posted transfer by its `txnRef` after successful funds transfer
 
    **Parameter:** txnRef(required).
     
@@ -628,7 +638,7 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
 
 
 ## 15. Deposit Verification
-- The request can be used to verify a funds deposit notification received via our Deposit WebHook notification event
+- This endpoint enables a merchant to verify a funds deposit notification received via our Deposit WebHook notification event
     
     **Parameter:** txnRef(required). The txnRef sent in the webhoook notificatoin payload.
 
@@ -653,7 +663,7 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
             "bankName": "WEMA BANK",
             "beneficiaryAccountName": "4426141954",
             "beneficiaryAccountNumber": "4426141954",
-            "narration": "Transfer from Nura M Bello Garindau IDFinder ",
+            "narration": "Transfer from Aminu Nasar Adam",
             "paymentDate": "2022-08-23T18:56:48.718614",
             "paymentRef": "DI59Ul5jhKyQIOUzDfVm",
             "sender": "4425640169",
@@ -678,7 +688,7 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
     ```
 
 ### 16. Zainbox Transactions History
-- This request enables you to Get a list of transactions from a particular zainbox
+- This endpoint enables a merchant to get a list of transactions from a particular zainbox
 
   **Parameter:** zainboxCode(Required)
     
@@ -721,7 +731,7 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
     ```
 
 ## 17. Total Payment Collected By Zainbox
-- Get the sum of total amount collected by all virtual accounts for a particular zainbox in a particular period, for both transfer and deposit transactions
+- This endpoint enables a merchant to get the sum of total amount collected by all virtual accounts for a particular zainbox in a particular period, for both transfer and deposit transactions
 
     **Parameter:** zainboxCode (Required), dateFrom (optional, if not provided, the system returns the data of the current month), dateTo (optional)
     
@@ -761,7 +771,7 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
     ```
 
 ### 18. Zainbox Profile and Current Billing Plan
-- Get the complete profile of a Zainbox, including the Current Billing Plan for account to account and interBank transfers respectively
+- This endpoint enables a merchant to get the complete profile of a Zainbox, including the Current Billing Plan for account to account and interBank transfers respectively
     
     **Parameter:** zainboxCode (Required)
     
@@ -803,7 +813,7 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
 
 
 ### 19. Merchant Transactions
-- This request enables you to get the list of first 50 transactions of a merchant
+- This endpoint enables a merchant to get the list of first 50 transactions of a merchant
     
    ```js
     const reponse = await Zainpay({
@@ -846,11 +856,11 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
 
 
 ## 20. Initialize Card Payment
-- This request enables a merchant to initialize a card payment.
-The **data** field of the response returned is a url which you can redirect your users to visit and make the payment.
+- This endpoint enables a merchant to initialize a card payment.
 
-    **Parameter:** email, amount, txnRef (unique per each request), mobileNumber, zainboxCode, emailAddress and callBackUrl.
-    Please Note that all parameters are required. The amount parameter should be in kobo decimilization.
+     **Parameter:** `amount`, `txnRef` (must be unique per each request),  `mobileNumber`, `zainboxCode`, `emailAddress` and `callBackUrl`.
+    
+    Please Note that all parameters are required and `amount` parameter should be in naira decimilization.
 
     ```js
         const reponse = await Zainpay({
@@ -869,6 +879,9 @@ The **data** field of the response returned is a url which you can redirect your
         console.log(reponse);
     ```
     ***Response***
+
+    The **data** field of the response returned is a url which you can redirect your users to visit and make the payment.
+
     ```json
         {
             "code": "00",
@@ -921,19 +934,26 @@ The **data** field of the response returned is a url which you can redirect your
 ## 22. Test Cards
 - The following cards can be used in the sandbox to make payments.
 
-    **Verve Card**
-    - 8920 6700 9023 471093
-        - Expiry Date: 50/05
-        - CVV: 390
-        - Pin: 1234
-        - OTP: 001122
+    **Visa Card**
+    - 4000 0000 0000 2503
+        - Expiry Date: 03/50
+        - CVV: 111
+        - Pin: 1111
+        - OTP: 123456
 
     **Master Card**
-    - 8930 6206 2217 9837
-        - Expiry Date: 50/01
-        - CVV: 738
+    - 5060990 5800 0021 7499
+        - Expiry Date: 03/50
+        - CVV: 1111
         - Pin: 1111
-        - OTP: 206221
+        - OTP: 123456
+        
+    **Expired Card**
+    - 5399 2370 3725 2182
+        - Expiry Date: 07/23
+        - CVV: 250
+        - Pin: 4321
+        - OTP: 123456
 
 **Acceptable Cards**
     - Verve
@@ -944,4 +964,101 @@ The **data** field of the response returned is a url which you can redirect your
     - Discover
     - American Experess
 
+## 23. Reconcile Card Payment
+- This endpoint enables a merchant to re-query the status of a hanging card payment and effect it as well. This is useful when a customer made a card payment and it is yet to be processed. 
 
+    **Parameter:** txnRef
+    ```js
+    const reponse = await Zainpay({
+        publicKey: PUBLIC_KEY,
+        serviceType: serviceTypes.RECONCILE_CARD_PAYMENT,
+        sandbox: true,
+        params: "?txnRef={txnRef}"
+    });
+    console.log(reponse);
+    ```
+    ***Response***
+    ```json
+    {
+        "code": "00",
+        "data": {
+            "paymentRef": "1234abcdef",
+            "txnDate": "2023-10-05T12:36:32",
+            "txnRef": "Txn89029387849",
+            "txnStatus": "success"
+        },
+        "description": "Transaction successful",
+        "status": "200 OK"
+    }  
+    ```
+
+## 24. Reconcile Card Payment
+- This endpoint enables a merchant to re-query the status of a hanging deposit payment and effect it as well. This is useful when a customer made a deposit into a virtual account and it is yet to reflect in the virtual account. 
+
+    **Parameter:** sessionId, verificationType, accountNumber, bankType
+
+    The `bankType` is the value of the `bankType` param that was used when creating the virtual account. For now, its value is `wemaBank` only.
+
+    The `verificationType` can  be any one of `depositReferenceNumber` or `depositAccountNumber`
+
+    The `sessionId` is required only when the `verificationType` is `depositReferenceNumber`
+
+    The `accountNumber` is the virtual account number that rceeives the funds in question
+
+    ```js
+    const reponse = await Zainpay({
+        publicKey: PUBLIC_KEY,
+        serviceType: serviceTypes.RECONCILE_DEPOSIT_PAYMENT,
+        sandbox: true,
+        params: "?bankType={bankType}&verificationType={verificationType}&accountNumber={accountNumber}&sessionId={sessionId}"
+    });
+    console.log(reponse);
+    ```
+    ***Response***
+    ```json
+    {
+        "code": "00",
+        "description": "Deposit verification was successful",
+        "status": "200 OK"
+    }
+    ```
+
+
+## 25. Make Recurring Card Payment
+- This endpoint enables a merchant to make a subsequent card payment using a card token. Click [here](https://zainpay.ng/developers/card-tokenization) to read more on card tokenisation.
+
+    **Parameter:** `amount`, `txnRef` (must be unique per each request),  `mobileNumber`, `zainboxCode`, `emailAddress`,  `callBackUrl` and `cardToken`.
+
+    Please Note that all parameters are required and `amount` parameter should be in naira decimilization.
+
+    ```js
+     const reponse = await Zainpay({
+            publicKey: PUBLIC_KEY,
+            serviceType: serviceTypes.INITIALIZE_PAYMENT,
+            sandbox: true,
+            data: { 
+                "amount": "100",
+                "txnRef" : "Q6166237864",
+                "mobileNumber": "08000000000",
+                "zainboxCode": "THbfnDvK5o",
+                "emailAddress": "info@test.com",
+                "callBackUrl" : "https://example.net/webhook/zainpay"
+                "cardToken" : "RtyfdeRESSRDTGY78654rtyuhHGFDghjgtrdety9087yuh"
+            } 
+        });
+    console.log(reponse);
+    ```
+    ***Response***
+    ```json
+    {
+        "code": "00",
+        "data": {
+            "amount": "100",
+            "callBackUrl": "https://example.net/webhook/zainpay",
+            "emailAddress": "info@test.com",
+            "txnRef": "Q6166237864"
+        },
+        "description": "card payment successful",
+        "status": "200 OK"
+    }
+    ``` 

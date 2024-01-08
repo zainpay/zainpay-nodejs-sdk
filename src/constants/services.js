@@ -119,5 +119,20 @@ module.exports = {
         name: "GET_CARD_PAYMENT_STATUS",
         url: '/virtual-account/wallet/deposit/verify',
         method: 'get',
+    },
+    RECONCILE_CARD_PAYMENT: {
+        name: "RECONCILE_CARD_PAYMENT",
+        url: '/virtual-account/wallet/transaction/reconcile/card-payment',
+        method: 'get',
+    },
+    RECONCILE_DEPOSIT_PAYMENT: {
+        name: "RECONCILE_DEPOSIT_PAYMENT",
+        url: '/virtual-account/wallet/transaction/reconcile/bank-deposit',
+        method: 'get',
+    },
+    MAKE_RECURRING_CARD_PAYMENT: {
+        name: "MAKE_RECURRING_CARD_PAYMENT",
+        url: '/zainbox/card/recurring/purchase',
+        method: 'post',
     }
 }
