@@ -73,6 +73,7 @@ The `Zainpay` class takes in the following parameters:
 - `MERCHANT_TRANSACTIONS`
 - `CREATE_VIRTUAL_ACCOUNT`
 - `VIRTUAL_ACCOUNTS`
+- `VIRTUAL_ACCOUNT_TRANSACTIONS`
 - `UPDATE_VIRTUAL_ACCOUNT_STATUS`
 - `VIRTUAL_ACCOUNT_BALANCE`
 - `ALL_VIRTUAL_ACCOUNT_BALANCE`
@@ -193,7 +194,7 @@ The following services are available with this SDK
             "address": "No 21 AA Rufa'i street, Kano", 
             "title": "Mr", 
             "state": "Kano", 
-            "zainboxCode": "333_zB2lg6lJtcGzP5XqouN9",
+            "zainboxCode": "THbfnDvK5o",
             "bvn" :"12345678901"
         }
     });
@@ -295,7 +296,7 @@ The following services are available with this SDK
         serviceType: serviceTypes.UPDATE_VIRTUAL_ACCOUNT_STATUS,
         sandbox: true,
         data: {
-          "zainboxCode": "{zainboxCode}", 
+          "zainboxCode": "THbfnDvK5o", 
           "accountNumber": "7963799062", 
           "status": true 
         }
@@ -461,7 +462,7 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
         sandbox: true,
         data: {
             "name": "new-daily-settlement3",
-            "zainboxCode": "{zainboxCode}",
+            "zainboxCode": "THbfnDvK5o",
             "scheduleType": "T1",
             "schedulePeriod": "Daily",
             "settlementAccountList": [
@@ -521,7 +522,7 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
         "data": 
            {
               "name": "new-daily-settlement3",
-              "zainboxCode": "{zainboxCode}",
+              "zainboxCode": "THbfnDvK5o",
               "scheduleType": "T1",
               "schedulePeriod": "Daily",
               "settlementAccountList": [
@@ -596,7 +597,7 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
           "amount": "1000",
           "sourceAccountNumber": "4430984950",
           "sourceBankCode": "0013",
-          "zainboxCode": "{zainboxCode}",
+          "zainboxCode": "THbfnDvK5o",
           "txnRef": "2Zei390tghmnj",
           "narration": "Your school fees",
           "callBackUrl": "https://myapp.exmaple.net/transfer/notification"
@@ -707,7 +708,7 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
             "txnDate": "2022-08-23T18:56:48.718441",
             "txnRef": "vat_1661281008padGWEQEYY",
             "txnType": "deposit",
-            "zainboxCode": "oD6mV9U1wH6n8NvFMxrc"
+            "zainboxCode": "THbfnDvK5o"
         },
         "description": "successful",
         "status": "200 OK"
@@ -1070,7 +1071,7 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
     ```js
      const reponse = await Zainpay({
             publicKey: PUBLIC_KEY,
-            serviceType: serviceTypes.INITIALIZE_PAYMENT,
+            serviceType: serviceTypes.MAKE_RECURRING_CARD_PAYMENT,
             sandbox: true,
             data: { 
                 "amount": "100",
@@ -1097,4 +1098,34 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
         "description": "card payment successful",
         "status": "200 OK"
     }
+    ``` 
+
+## 26. Update virtual account BVN
+- This endpoint allows a merchant to update the BVN record of a virtual account
+
+    **Parameter:** `amount`, `txnRef` (must be unique per each request),  `mobileNumber`, `zainboxCode`, `emailAddress`,  `callBackUrl` and `cardToken`.
+
+    Please Note that all parameters are required and `amount` parameter should be in naira decimilization.
+
+    ```js
+     const reponse = await Zainpay({
+            publicKey: PUBLIC_KEY,
+            serviceType: serviceTypes.UPDATE_VIRTUAL_ACCOUNT_BVN,
+            sandbox: true,
+            data: { 
+                    "accountNumber": "4436758909", 
+                    "zainboxCode": "THbfnDvK5o",
+                    "bvn": "12345654321"
+                } 
+        });
+    console.log(reponse);
+    ```
+    ***Response***
+    ```json
+        {
+            "code": "00",
+            "description": "successful",
+            "status": "200 OK"
+        }
+    
     ``` 
