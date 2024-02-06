@@ -37,7 +37,7 @@ yarn add zainpay-nodejs-sdk
 const { Zainpay, serviceTypes} = require('zainpay-nodejs-sdk'); // JavaScript
 ```
 
-Instantiate the Zainpay class
+Instantiate the `Zainpay` class
 
 ```js
   const reponse = await Zainpay({
@@ -46,16 +46,7 @@ Instantiate the Zainpay class
     sandbox: true,
     data: {
       "bankType": "wemaBank",
-      "firstName": "Bello",
-      "surname": "Samuel Sunday",
-      "email": "bellosamuelsunday@gmail.com",
-      "mobileNumber": "0810000000",
-      "dob": "12-08-1980",
-      "gender": "M",
-      "address": "Gidado street Kano",
-      "title": "Mr",
-      "state": "Kano",
-      "zainboxCode": "{zainboxCode}"
+      "firstName": "Bello"
   }
   });
   console.log(reponse);
@@ -64,16 +55,16 @@ Instantiate the Zainpay class
 
 
 **Note:**
-The Zainpay class takes in the following parameters:
+The `Zainpay` class takes in the following parameters:
 
 - **publicKey** - This is your public key, which can be found on your [dashboard](https://zainpay.ng/merchant/dashboard/settings).
-- **serviceType** - This is the service you want to use, for example, `CREATE_VIRTUAL_ACCOUNT`.
-- **sandbox** - This is a boolean value, if set to true, it will use the [sandbox](https://sandbox.zainpay.ng/) API, if set to false, it will use the [production(live)](https://api.zainpay.ng/) API.
+- **serviceType** - This is the service you want to use, for example, `CREATE_VIRTUAL_ACCOUNT`. See below for all available service types.
+- **sandbox** - This is a boolean value, if set to `true`, it will use the [sandbox](https://sandbox.zainpay.ng/) API, if set to `false`, it will use the [production(live)](https://api.zainpay.ng/) API.
 - **data** - This is the data you want to post as a payload, for example, the payload for creating a virtual account.
 - **params** - This is the params you want querying the strings, for example, the params for getting a virtual account.
 
 
-- For more information about the services exposed by the SDK, please refer to the [documentation](https://zainpay.ng/developers/).
+- For more information, please refer to the [documentation](https://zainpay.ng/developers/).
 
 ### Service Type Name List
 - `CREATE_ZAINBOX`
@@ -108,7 +99,7 @@ The following services are available with this SDK
 
 ### 1. Create Zainbox
 - A zainbox is a virtual bucket that allows a merchant to create unlimited multiple virtual accounts.
-- This endpoint enables a merchant to create a zainbox.
+- This endpoint allows a merchant to create a zainbox.
     
    ```js
     const reponse = await Zainpay({
@@ -131,13 +122,14 @@ The following services are available with this SDK
     ***Response***
     ```json
     {
-        "status": "Success",
-        "description": "successful",
+        "code": "00",
         "data": {
             "codeName": "333_zB2lg6lJtcGzP5XqouN9",
             "name": "wecode-contribution"
-        }
-    } 
+        },
+        "description": "successful",
+        "status": "200 OK"
+   }
     ```     
 
 
@@ -162,23 +154,26 @@ The following services are available with this SDK
             {
                 "callbackUrl": "http://10e1-41-184-106-54.ngrok.io/notification",
                 "codeName": "THbfnDvK5o",
+                "emailNotification": "info@test.onlines",
                 "name": "test-box",
                 "tags": "land, management"
             },
             {
-                "callbackUrl": "https://powershop.ng/notification",
-                "codeName": "rAqwjnYO5chL3QuV7yk0",
-                "name": "powershop8",
-                "tags": "discos, kedco, aedc"
-            }
+                "callbackUrl": "http://localhost:2009/payments/zainpay/notification",
+                "codeName": "333_zB2lg6lJtcGzP5XqouN9",
+                "emailNotification": "info@test.onlines",
+                "name": "wecode-contribution",
+                "tags": "test"
+            },
+
         ],
         "description": "successful",
-        "status": "Success"
+	    "status": "200 OK"
     }
     ```
 
 ### 3. Create Virtual Account
-- This endpoint enables a merchant to create a virtual account and map it to a zainbox. A zainbox can hold multiple virtual accounts.
+- This endpoint allows a merchant to create a virtual account and map it to a zainbox. A zainbox can hold multiple virtual accounts.
 
     ```js
 
@@ -198,7 +193,8 @@ The following services are available with this SDK
             "address": "No 21 AA Rufa'i street, Kano", 
             "title": "Mr", 
             "state": "Kano", 
-            "zainboxCode": "{zainboxCode}"
+            "zainboxCode": "333_zB2lg6lJtcGzP5XqouN9",
+            "bvn" :"12345678901"
         }
     });
     console.log(reponse);
@@ -206,15 +202,20 @@ The following services are available with this SDK
     ***Response***
     ```json
     {
-        "accountName": "John Saminu Sunday",
-        "accountNumber": "4426334208", 
-        "accountType": "",
-        "bankName": "wemaBank",
-        "email": "johnsaminu@gmail.com"
+        "code": "00",
+        "data": {
+            "accountName": "John Saminu Sunday",
+            "accountNumber": "4426334208", 
+            "bankName": "wemaBank",
+            "bvn": "12345678901",
+            "email": "johnsaminu@gmail.com"
+        },
+        "description": "successful",
+        "status": "200 OK"
     }
     ```
-### 4. Get Virtual Accounts
-- This endpoint enables a merchant to get all virtual accounts linked to a zainbox.
+### 4. Get Virtual Accounts In a Zainbox
+- This endpoint allows a merchant to get all virtual accounts linked to a zainbox.
 
     **Parameter:** zainboxCode(required).
    ```js
@@ -229,7 +230,9 @@ The following services are available with this SDK
 
     ***Response***
     ```json
-    [
+    {
+	"code": "00",
+	"data": [
         {
             "bankAccount": "4426334208",
             "bankName": "035",
@@ -240,11 +243,14 @@ The following services are available with this SDK
             "bankName": "035",
             "name": "Idris Urmi Bello"
         }
-    ]
+    ],
+    "description": "successful",
+	"status": "200 OK"
+}
     ```
 
 ### 5. Get Virtual Account Balance
-- This endpoint enables a merchant to get the current wallet balance of a virtual account number.
+- This endpoint allows a merchant to get the current wallet balance of a virtual account number.
 
     **Parameter:** virtualAccoutNumber(required)
     
@@ -267,16 +273,17 @@ The following services are available with this SDK
             "accountName": "Aminu Nasar Adam", 
             "accountNumber": "7966884043", 
             "balanceAmount": 372555, 
+            "bankCode": "035",
             "transactionDate": "2021-10-13T13:45:52" 
         }, 
         "description": "successful",
-        "status": "Success" 
+	    "status": "200 OK"
     }
     ```
     
 ### 6. Update Virtual Account Status
 
-- This endpoint enables a merchant to activate or deactivate virtual account.
+- This endpoint allows a merchant to activate or deactivate virtual account.
 - NOTE: Setting the `status` field to `true` will activate the virtual account, while setting it to `false` will deactivate it.
 
     ***Important Note***
@@ -300,14 +307,14 @@ The following services are available with this SDK
     ```json
         {
             "code": "00",
-            "description": "Successfully Updated Account",
-            "status": "success"
+            "description": "Successfully updated",
+            "status": "200 OK"
         }
     ```
 
 
 ### 7. All Virtual Account Balances of a Zainbox
-- This endpoint enables a merchant to fetch all current account balances for all virtual accounts in a zainbox.
+- This endpoint allows a merchant to fetch all current account balances for all virtual accounts in a zainbox.
     
     **Parameter:** zainboxCode(required)
    ```js
@@ -330,28 +337,31 @@ The following services are available with this SDK
         "accountName": "Aminu Nasar Adam",
         "accountNumber": "7966884043",
         "balanceAmount": 372555,
+        "bankCode": "000003",
         "transactionDate": "2021-10-13T13:45:52"
         },
         {
         "accountName": "Khalid Ali Sani",
         "accountNumber": "1234567890",
         "balanceAmount": 200,
+        "bankCode": "000003",
         "transactionDate": "2021-12-13T13:45:52"
         },
         {
         "accountName": "Nura Bala Usman",
         "accountNumber": "9900778833",
         "balanceAmount": 105000,
+        "bankCode": "000003",
         "transactionDate": "2022-01-29T13:45:52"
         }
     ],
     "description": "successful",
-    "status": "Success"
+    "status": "200 OK"
     }                 
     ```
 
 ### 8. Virtual Account Transactions
-- This endpoint enables a merchant to get all transactions of an account
+- This endpoint allows a merchant to get all transactions of an account
     
     **Parameter:** accountNumber(required), recordsCount(optional, default is 20)
     ```js
@@ -368,37 +378,34 @@ The following services are available with this SDK
     ```json
     {
         "code": "00",
-        "data": 
-        [
-        {
-            "accountNumber": "7966884043",
-            "destinationAccountNumber": "2000002105",
-            "amount": 7289,
-            "balance": 379844,
-            "narration": "",
-            "transactionDate": "2021-10-13T13:41:39",
-            "transactionRef": "",
-            "transactionType": "transfer"
-        },
-        {
-            "accountNumber": "7966884043",
-            "destinationAccountNumber": "1234567890",
-            "amount": 7289,
-            "balance": 372555,
-            "narration": "",
-            "transactionDate": "2021-10-13T13:45:52",
-            "transactionRef": "",
-            "transactionType": "transfer"
-        }
+        "data": [
+            {
+                "accountNumber": "7966884043",
+                "amount": 289,
+                "balance": 700,
+                "narration": "test",
+                "transactionDate": "2021-10-13T13:41:39",
+                "transactionRef": "",
+                "transactionType": "transfer"
+            },
+            {
+                "accountNumber": "7966884043",
+                "amount": 7289,
+                "balance": 7289,
+                "narration": "",
+                "transactionDate": "2021-10-13T13:45:52",
+                "transactionRef": "",
+                "transactionType": "deposit"
+            }
         ],
-            "description": "successful",
-            "status": "Success"
+        "description": "successful",
+	    "status": "200 OK"
     }  
     ```
 
 
 ## 9. Get Bank List
-- This endpoint enables a merchant to get the list of banks supported by Zainpay. 
+- This endpoint allows a merchant to get the list of banks supported by Zainpay. 
     
    ```js
     const reponse = await Zainpay({
@@ -428,11 +435,11 @@ The following services are available with this SDK
         }
         ],
     "description": "Bank list",
-    "status": "Success"
+    "status": "200 OK"
     }
     ```
 ## 10. Create Settlement
-- This endpoint enables a merchant to create a scheduled settlement for a zainbox. Please bear in mind that at any given time, a zainbox can only have one type of settlement.
+- This endpoint allows a merchant to create a scheduled settlement for a zainbox. Please bear in mind that at any given time, a zainbox can only have one type of settlement.
 
 Planned settlements are divided into three categories:
 - T1: **Transaction plus one working day** The value of the T1 schedule. The period must always be on a daily basis.
@@ -477,17 +484,23 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
 
     ***Response***
     ```json
-    {
-        "name": "new-daily-settlement3", 
-        "scheduleType": "T30", 
-        "schedulePeriod": "Daily", 
-        "zainboxCode": "THbfnDvK5op", 
-        "status": true 
-    } 
+      {
+        "code": "00",
+        "data": 
+            {
+                "name": "new-daily-settlement3", 
+                "scheduleType": "T30", 
+                "schedulePeriod": "Daily", 
+                "zainboxCode": "THbfnDvK5op", 
+                "status": true 
+            },
+        "description": "Bank list",
+        "status": "200 OK"
+    }
     ```
 
 ## 11. Get Settlement
-- This endpoint enables a merchant to get settlement(s) tied to a zainbox
+- This endpoint allows a merchant to get settlement(s) tied to a zainbox
 
     **Parameter:** zainboxCode(required)
    ```js
@@ -501,8 +514,38 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
     ```
 
 
+***Response***
+   ```json
+    {
+        "code": "00",
+        "data": 
+           {
+              "name": "new-daily-settlement3",
+              "zainboxCode": "{zainboxCode}",
+              "scheduleType": "T1",
+              "schedulePeriod": "Daily",
+              "settlementAccountList": [
+                  {
+                      "accountNumber": "1234567890",
+                      "bankCode": "0009",
+                      "percentage": "10"
+                  },
+                  {
+                      "accountNumber": "1234567890",
+                      "bankCode": "0009",
+                      "percentage": "90"
+                  }
+              ],
+              "status": true
+            },
+        "description": "Bank list",
+        "status": "200 OK"
+    }
+    ```
+
+
 ## 12. Name Enquiry
-- This endpoint enables a merchant to validate a bank account number.
+- This endpoint allows a merchant to validate a bank account number.
     
     **Parameter:** bankCode(required), accountNumber(required)
    ```js
@@ -527,7 +570,7 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
             "bankName": "ACCESS BANK"
         },
         "description": "successful",
-        "status": "Success"
+	    "status": "200 OK"
     }
     ```
 
@@ -550,8 +593,8 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
         data: {
           "destinationAccountNumber": "0044159752",
           "destinationBankCode": "000005",
-          "amount": "9997",
-          "sourceAccountNumber": "7966884043",
+          "amount": "1000",
+          "sourceAccountNumber": "4430984950",
           "sourceBankCode": "0013",
           "zainboxCode": "{zainboxCode}",
           "txnRef": "2Zei390tghmnj",
@@ -566,45 +609,38 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
     ***Response***
     ```json
     {
-        "code": "01",
-        "description": "successful queued",
-        "status": "Queued"
+        "code": "21",
+        "description": "Successful queued Transaction ",
+        "status": "202 Accepted"
     }
     ```
 
     - A queued response means the transaction has successfully been validated and been processed. The final response should be accepted as an event push notification via the zainbox callback URL provided.
 
 
-    ***Event Notification for a successful Transaction***
+    ***Event Notification for a successful transfer***
     ```json
     {
-        "data": {
-            "depositedAmount": "100000",
-            "txnChargesAmount": "6400",
-            "amountAfterCharges": "93600",
-            "bankName": "ZainMFB",
-            "beneficiaryAccountName": "idris",
-            "beneficiaryAccountNumber": "7964524199",
-            "narration": "gift",
-            "paymentDate": "2021-12-28T11:48:35.044886444",
-            "paymentRef": "a1oA0ws127quism",
-            "sender": "900989098",
-            "senderName": "hassan ",
-            "txnDate": "2021-12-28T11:48:35.044777507",
-            "txnRef": "730003356",
-            "txnType": "deposit",
-            "zainboxCode": "xmaldoaYnakaAAVOAE",
-            "callBackUrl": "http://gofundme.ng/webhook",
-            "emailNotification": "user@user.com",
-            "zainboxName": "users",
+    "data": {
+        "accountNumber": "4430984950",
+        "amount": {
+        "amount": 1000 
         },
-        "event": "deposit.success"
+        "beneficiaryAccountNumber": "0044159752",
+        "beneficiaryBankCode": "000005",
+        "narration": "Your school fees",
+        "paymentRef": "BSTuvDYbGIy8krkoycY1",
+        "txnDate": "2021-12-28T18:19:42.222226518",
+        "txnRef": "2Zei390tghmnj",
+        "txnType": "transfer"
+    },
+    "event": "transfer.success"
     }
     ```
 
 
 ## 14. Transfer Verification
-- This endpoint enables a merchant to verify a posted transfer by its `txnRef` after successful funds transfer
+- This endpoint allows a merchant to verify a posted transfer by its `txnRef` after funds transfer is queued
 
    **Parameter:** txnRef(required).
     
@@ -623,22 +659,22 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
     {
         "code": "00",
         "data": {
-            "amount": "8431",
+            "amount": "1000",
             "destinationAccountNumber": "0044159752",
             "destinationBankCode": "000005",
-            "narration": "lunch for naimat",
-            "sourceAccountNumber": "7964524199",
+            "narration": "Your school fees",
+            "sourceAccountNumber": "4430984950",
             "txnDate": "2021-12-29T08:00:49",
             "txnStatus": "success"
         },
-        "description": "successful",
-        "status": "Success"
+       	"description": "successful",
+	    "status": "200 OK"
     }
     ```
 
 
 ## 15. Deposit Verification
-- This endpoint enables a merchant to verify a funds deposit notification received via our Deposit WebHook notification event
+- This endpoint allows a merchant to verify a funds deposit notification received via our Deposit WebHook notification event
     
     **Parameter:** txnRef(required). The txnRef sent in the webhoook notificatoin payload.
 
@@ -674,7 +710,7 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
             "zainboxCode": "oD6mV9U1wH6n8NvFMxrc"
         },
         "description": "successful",
-        "status": "Success"
+        "status": "200 OK"
     }
     ```
 
@@ -688,7 +724,7 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
     ```
 
 ### 16. Zainbox Transactions History
-- This endpoint enables a merchant to get a list of transactions from a particular zainbox
+- This endpoint allows a merchant to get a list of transactions from a particular zainbox
 
   **Parameter:** zainboxCode(Required)
     
@@ -726,12 +762,12 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
             "transactionType": "deposit"
         }],
         "description": "successful",
-        "status": "Success"
+        "status": "200 OK"
     }
     ```
 
 ## 17. Total Payment Collected By Zainbox
-- This endpoint enables a merchant to get the sum of total amount collected by all virtual accounts for a particular zainbox in a particular period, for both transfer and deposit transactions
+- This endpoint allows a merchant to get the sum of total amount collected by all virtual accounts for a particular zainbox in a particular period, for both transfer and deposit transactions
 
     **Parameter:** zainboxCode (Required), dateFrom (optional, if not provided, the system returns the data of the current month), dateTo (optional)
     
@@ -766,12 +802,12 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
     }
     ],
     "description": "Summary grouped by txn type",
-    "status": "Success"
+    "status": "200 OK"
     }
     ```
 
 ### 18. Zainbox Profile and Current Billing Plan
-- This endpoint enables a merchant to get the complete profile of a Zainbox, including the Current Billing Plan for account to account and interBank transfers respectively
+- This endpoint allows a merchant to get the complete profile of a Zainbox, including the Current Billing Plan for account to account and interBank transfers respectively
     
     **Parameter:** zainboxCode (Required)
     
@@ -789,8 +825,6 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
     ```json
     {
     "code": "00",
-    "description": "successful",
-    "status": "Success",
     "data": {
         "zainbox": {
             "callbackUrl": "http://localhost:5000/notification",
@@ -806,14 +840,16 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
             "fixedCharge": "5000.0",
             "percentageCharge": 1.4
         }
-    }
+    },
+    "description": "successful",
+    "status": "200 OK",
     
     }
     ```
 
 
 ### 19. Merchant Transactions
-- This endpoint enables a merchant to get the list of first 50 transactions of a merchant
+- This endpoint allows a merchant to get the list of first 50 transactions of a merchant
     
    ```js
     const reponse = await Zainpay({
@@ -850,13 +886,13 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
         }
     ],
     "description": "successful",
-    "status": "Success"
+    "status": "200 OK"
     }
     ```
 
 
 ## 20. Initialize Card Payment
-- This endpoint enables a merchant to initialize a card payment.
+- This endpoint allows a merchant to initialize a card payment.
 
      **Parameter:** `amount`, `txnRef` (must be unique per each request),  `mobileNumber`, `zainboxCode`, `emailAddress` and `callBackUrl`.
     
@@ -965,7 +1001,7 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
     - American Experess
 
 ## 23. Reconcile Card Payment
-- This endpoint enables a merchant to re-query the status of a hanging card payment and effect it as well. This is useful when a customer made a card payment and it is yet to be processed. 
+- This endpoint allows a merchant to re-query the status of a hanging card payment and effect it as well. This is useful when a customer made a card payment and it is yet to be processed. 
 
     **Parameter:** txnRef
     ```js
@@ -993,7 +1029,7 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
     ```
 
 ## 24. Reconcile Card Payment
-- This endpoint enables a merchant to re-query the status of a hanging deposit payment and effect it as well. This is useful when a customer made a deposit into a virtual account and it is yet to reflect in the virtual account. 
+- This endpoint allows a merchant to re-query the status of a hanging deposit payment and effect it as well. This is useful when a customer made a deposit into a virtual account and it is yet to reflect in the virtual account. 
 
     **Parameter:** sessionId, verificationType, accountNumber, bankType
 
@@ -1025,7 +1061,7 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
 
 
 ## 25. Make Recurring Card Payment
-- This endpoint enables a merchant to make a subsequent card payment using a card token. Click [here](https://zainpay.ng/developers/card-tokenization) to read more on card tokenisation.
+- This endpoint allows a merchant to make a subsequent card payment using a card token. Click [here](https://zainpay.ng/developers/card-tokenization) to read more on card tokenisation.
 
     **Parameter:** `amount`, `txnRef` (must be unique per each request),  `mobileNumber`, `zainboxCode`, `emailAddress`,  `callBackUrl` and `cardToken`.
 
@@ -1042,7 +1078,7 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
                 "mobileNumber": "08000000000",
                 "zainboxCode": "THbfnDvK5o",
                 "emailAddress": "info@test.com",
-                "callBackUrl" : "https://example.net/webhook/zainpay"
+                "callBackUrl" : "https://example.net/webhook/zainpay",
                 "cardToken" : "RtyfdeRESSRDTGY78654rtyuhHGFDghjgtrdety9087yuh"
             } 
         });
