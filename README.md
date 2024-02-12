@@ -485,19 +485,11 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
 
     ***Response***
     ```json
-      {
+     {
         "code": "00",
-        "data": 
-            {
-                "name": "new-daily-settlement3", 
-                "scheduleType": "T30", 
-                "schedulePeriod": "Daily", 
-                "zainboxCode": "THbfnDvK5op", 
-                "status": true 
-            },
-        "description": "Bank list",
+        "description": "successful",
         "status": "200 OK"
-    }
+     }
     ```
 
 ## 11. Get Settlement
@@ -518,30 +510,28 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
 ***Response***
    ```json
     {
-        "code": "00",
-        "data": 
-           {
-              "name": "new-daily-settlement3",
-              "zainboxCode": "THbfnDvK5o",
-              "scheduleType": "T1",
-              "schedulePeriod": "Daily",
-              "settlementAccountList": [
-                  {
-                      "accountNumber": "1234567890",
-                      "bankCode": "0009",
-                      "percentage": "10"
-                  },
-                  {
-                      "accountNumber": "1234567890",
-                      "bankCode": "0009",
-                      "percentage": "90"
-                  }
-              ],
-              "status": true
-            },
-        "description": "Bank list",
-        "status": "200 OK"
-    }
+	"code": "00",
+	"data": {
+		"name": "new-daily-settlement3",
+		"schedulePeriod": "Daily",
+		"scheduleType": "T30",
+		"settlementAccounts": [
+			{
+				"accountNumber": "1234567890",
+				"bankCode": "000013",
+				"percentage": "90"
+			},
+			{
+				"accountNumber": "0987654321",
+				"bankCode": "000026",
+				"percentage": "10"
+			}
+		],
+		"zainbox": "THbfnDvK5op"
+	},
+	"description": "Successful",
+	"status": "200 OK"
+}
     ```
 
 
@@ -720,8 +710,8 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
     {
         "code": "04",
         "description": "Txn not found",
-        "status": "Failed"
-    }    
+        "status": "400 Bad Request"
+    }   
     ```
 
 ### 16. Zainbox Transactions History
@@ -784,27 +774,27 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
 
     ***Response***
     ```json
-    {
-    "code": "00",
-    "data": [
-    {
-        "count": 4,
-        "dateFrom": "2022-02",
-        "dateTo": "2022-03",
-        "total": "12690",
-        "transactionType": "deposit"
-    },
-        {
-        "count": 4,
-        "dateFrom": "2022-02",
-        "dateTo": "2022-03",
-        "total": "29038",
-        "transactionType": "transfer"
-    }
-    ],
-    "description": "Summary grouped by txn type",
-    "status": "200 OK"
-    }
+   {
+	"code": "00",
+	"data": [
+		{
+			"count": 4,
+			"dateFrom": "2022-02",
+			"dateTo": "2022-03",
+			"total": "12690",
+			"transactionType": "deposit"
+		},
+		{
+			"count": 4,
+			"dateFrom": "2022-02",
+			"dateTo": "2022-03",
+			"total": "29038",
+			"transactionType": "transfer"
+		}
+	],
+	"description": "Summary grouped by txn type",
+	"status": "200 OK"
+}
     ```
 
 ### 18. Zainbox Profile and Current Billing Plan
@@ -824,28 +814,30 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
     ```
     ***Response***
     ```json
-    {
-    "code": "00",
-    "data": {
-        "zainbox": {
-            "callbackUrl": "http://localhost:5000/notification",
-            "codeName": "THbfnDvK5o",
-            "name": "test-box",
-            "tags": "land, management"
-        },
-        "account2AccountBilling": {
-            "fixedCharge": "1000",
-            "percentageCharge": 1.5
-        },
-        "interBankBilling": {
-            "fixedCharge": "5000.0",
-            "percentageCharge": 1.4
-        }
-    },
-    "description": "successful",
-    "status": "200 OK",
-    
-    }
+   {
+	"code": "00",
+	"data": {
+		"cardPaymentBilling": {
+			"capAmount": "100000.0",
+			"fixedCharge": "10000.0",
+			"percentageCharge": 1.5
+		},
+		"virtualAccountTransferBilling": {
+			"capAmount": "1000.0",
+			"fixedCharge": "5000.0",
+			"percentageCharge": 1.0
+		},
+		"zainbox": {
+			"callbackUrl": "http://example.net/payments/zainpay/notification",
+			"codeName": "THbfnDvK5o",
+			"emailNotification": "tester@gmail.com",
+			"name": "Testing test",
+			"tags": "test"
+		}
+	},
+	"description": "successful",
+	"status": "200 OK"
+  }
     ```
 
 
