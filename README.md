@@ -508,7 +508,7 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
 
 
 ***Response***
-   ```json
+```json
     {
 	"code": "00",
 	"data": {
@@ -530,9 +530,9 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
 		"zainbox": "THbfnDvK5op"
 	},
 	"description": "Successful",
-	"status": "200 OK"
-}
-    ```
+	"status": "200 OK" 
+    }
+```
 
 
 ## 12. Name Enquiry
