@@ -94,17 +94,7 @@ module.exports = {
         name: "GET_SCHEDULED_SETTLEMENT",
         url: '/zainbox/settlement',
         method: 'get',
-    },
-    VALIDATE_OTP: {
-        name: "VALIDATE_OTP",
-        url: '/zainbox/card/other-card/validate/otp',
-        method: 'post',
-    },
-    VALIDATE_CARD: {
-        name: "VALIDATE_CARD",
-        url: '/zainbox/card/validate/card',
-        method: 'post',
-    },
+    }, 
     INITIALIZE_PAYMENT: {
         name: "INITIALIZE_PAYMENT",
         url: '/zainbox/card/initialize/payment',
@@ -119,5 +109,25 @@ module.exports = {
         name: "GET_CARD_PAYMENT_STATUS",
         url: '/virtual-account/wallet/deposit/verify',
         method: 'get',
+    },
+    RECONCILE_CARD_PAYMENT: {
+        name: "RECONCILE_CARD_PAYMENT",
+        url: '/virtual-account/wallet/transaction/reconcile/card-payment',
+        method: 'get',
+    },
+    RECONCILE_DEPOSIT_PAYMENT: {
+        name: "RECONCILE_DEPOSIT_PAYMENT",
+        url: '/virtual-account/wallet/transaction/reconcile/bank-deposit',
+        method: 'get',
+    },
+    MAKE_RECURRING_CARD_PAYMENT: {
+        name: "MAKE_RECURRING_CARD_PAYMENT",
+        url: '/zainbox/card/recurring/purchase',
+        method: 'post',
+    },
+    UPDATE_VIRTUAL_ACCOUNT_BVN: {
+        name: "UPDATE_VIRTUAL_ACCOUNT_BVN",
+        url: '/virtual-account/update/bvn',
+        method: 'post',
     }
 }
