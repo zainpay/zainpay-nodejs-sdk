@@ -92,6 +92,7 @@ The `Zainpay` class takes in the following parameters:
 - `RECONCILE_CARD_PAYMENT`
 - `RECONCILE_DEPOSIT_PAYMENT`
 - `MAKE_RECURRING_CARD_PAYMENT`
+- `UPDATE_VIRTUAL_ACCOUNT_BVN`
 
 
 ## Available Services exposed by the SDK
